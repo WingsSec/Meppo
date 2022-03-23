@@ -9,9 +9,9 @@ requests.packages.urllib3.disable_warnings()
 
 # 脚本信息
 ######################################################
-NAME='Zabbix_Console_default_password'
+NAME='Zabbix_default_password'
 AUTHOR="RabbitMask"
-REMARK='zabbix Console default password'
+REMARK='zabbix 默认密码'
 FOFA_RULE='app="ZABBIX-监控系统"'
 ######################################################
 

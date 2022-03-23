@@ -42,7 +42,7 @@ from Moudle.Inspur import Inspur_sysShell_RCE
 from Moudle.Jeecms import Jeecms_ssrf_getshell
 
 # Kangle
-from Moudle.Kangle import Kangle_Console_default_password
+from Moudle.Kangle import Kangle_default_password
 
 # Landray
 from Moudle.Landray import Landray_OA_anyfile_read
@@ -106,5 +106,5 @@ from Moudle.Weblogic import Weblogic_Console_Info_Leak
 
 # Zabbix
 from Moudle.Zabbix import CVE_2016_10134
-from Moudle.Zabbix import Zabbix_Console_default_password
+from Moudle.Zabbix import Zabbix_default_password
 

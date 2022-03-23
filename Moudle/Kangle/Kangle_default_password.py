@@ -8,9 +8,9 @@ requests.packages.urllib3.disable_warnings()
 
 # 脚本信息
 ######################################################
-NAME = 'Kangle_Console_default_password'
+NAME = 'Kangle_default_password'
 AUTHOR = "RabbitMask"
-REMARK = 'kangle Console default password'
+REMARK = 'kangle 默认密码'
 FOFA_RULE = 'app="kangle-easypanel"'
 ######################################################
 
