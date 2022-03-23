@@ -34,8 +34,8 @@ from Moudle.F5 import CVE_2021_22986
 from Moudle.Fikker import Fikker_admin
 
 # Inspur
-from Moudle.Inspur import Inspur_Any_user_login
 from Moudle.Inspur import CVE_2020_21224
+from Moudle.Inspur import Inspur_Any_user_login
 from Moudle.Inspur import Inspur_sysShell_RCE
 
 # Jeecms

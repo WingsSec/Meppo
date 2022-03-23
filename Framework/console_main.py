@@ -8,6 +8,8 @@
 |_| \_\__,_|_.__/|_.__/|_|\__|_|  |_|\__,_|___/_|\_\
 '''
 import argparse
+
+from Config.config_api import FOFA_API_KEY
 from Framework import console_attack
 from Seek import fofaapi
 from Framework.console_attack import get_urls
@@ -42,10 +44,16 @@ def Console():
 ########################################################################################################################
 
     if args.fofa:
-        if args.num and int(args.num) > 10000:
-            print("Num Don't > 10000 PLS~")
-        else:
-            fofaapi.run(args.fofa, 1000)
+        try:
+            if FOFA_API_KEY:
+                if args.num and int(args.num) > 10000:
+                    print("Num Don't > 10000 PLS~")
+                else:
+                    fofaapi.run(args.fofa, 1000)
+            else:
+                print("如需使用FofaAPI，请在Config/config_api下完成相关配置")
+        except:
+            print("如需使用FofaAPI，请在Config/config_api下完成相关配置")
     elif args.poc:
         try:
             if args.url:
@@ -73,7 +81,16 @@ def Console():
     elif args.listall:
         payload_list_all()
     else:
-        print("Usage:\n\tStep 1: python Meppo.py -l\n\tStep 2: python Meppo.py -m xxx -l\n\tStep 3: python Meppo.py -m / -poc \n\t")
+        print("Usage:"
+              "\n\tpython Meppo.py -l\t\t\t\tList All Moudles"
+              "\n\tpython Meppo.py -ll\t\t\t\tList All Payloads"
+              "\n\tpython Meppo.py -m xxx -l\t\t\tList Payload Of The Moudle"
+              "\n\tpython Meppo.py -poc xxx -u target\t\t单目标 单POC监测"
+              "\n\tpython Meppo.py -poc xxx -f targets.txt\t\t多目标 单POC监测"
+              "\n\tpython Meppo.py -m xxx -u target\t\t单目标 模块监测"
+              "\n\tpython Meppo.py -m xxx -f targets.txt\t\t多目标 模块监测"
+              "\n\tpython Meppo.py -fofa APP=\"DEMO\"\t\tFOFA API 报告导出 num默认1000"
+              "\n\tpython Meppo.py -fofa APP=\"DEMO\" -num 100\tFOFA API 报告导出 自定义数量")
 
 
 ########################################################################################################################
