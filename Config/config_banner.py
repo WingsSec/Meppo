@@ -12,7 +12,7 @@ import random
 from Moudle.Moudle_index import PAYLOAD_NUM, MOUDLE_NUM
 
 Version = 'V 1.1'
-info = '\n\t\t漏洞监测框架 Meppo | By WingsSec | {}\n'.format(Version)
+info = '\n\t\t漏洞检测框架 Meppo | By WingsSec | {}\n'.format(Version)
 NUM='\t\t  [ {} MOUDLES\t\t{} PAYLOADS ]'.format(str(MOUDLE_NUM).center(3),str(PAYLOAD_NUM).center(3))
 
 banner1 = r'''
