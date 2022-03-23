@@ -20,10 +20,10 @@ Usage:
         python Meppo.py -l                              List All Moudles
         python Meppo.py -ll                             List All Payloads
         python Meppo.py -m xxx -l                       List Payload Of The Moudle
-        python Meppo.py -poc xxx -u target              单目标 单POC监测
-        python Meppo.py -poc xxx -f targets.txt         多目标 单POC监测
-        python Meppo.py -m xxx -u target                单目标 模块监测
-        python Meppo.py -m xxx -f targets.txt           多目标 模块监测
+        python Meppo.py -poc xxx -u target              单目标 单POC检测
+        python Meppo.py -poc xxx -f targets.txt         多目标 单POC检测
+        python Meppo.py -m xxx -u target                单目标 模块检测
+        python Meppo.py -m xxx -f targets.txt           多目标 模块检测
         python Meppo.py -fofa APP="DEMO"                FOFA API 报告导出 num默认1000
         python Meppo.py -fofa APP="DEMO" -num 100       FOFA API 报告导出 自定义数量
 
