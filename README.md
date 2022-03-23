@@ -14,7 +14,7 @@ python Meppo.py
 /_/  /_/\___/ .___/ .___/\____/ 
            /_/   /_/            
 
-                漏洞监测框架 Meppo | By WingsSec | V 1.1
+                漏洞检测框架 Meppo | By WingsSec | V 1.1
                   [  26 MOUDLES          55 PAYLOADS ]
 Usage:
         python Meppo.py -l                              List All Moudles
@@ -38,7 +38,7 @@ python Meppo.py -h
 /_/  /_/\___/ .___/ .___/\____/ 
            /_/   /_/            
 
-                漏洞监测框架 Meppo | By WingsSec | V 1.1
+                漏洞检测框架 Meppo | By WingsSec | V 1.1
                   [  26 MOUDLES          55 PAYLOADS ]
 usage: Meppo.py [-h] [-l] [-ll] [-m MOUDLE] [-u URL] [-f FILE] [-poc POC] [-fofa FOFA] [-num NUM]
 
