@@ -7,7 +7,7 @@
 |  _ < (_| | |_) | |_) | | |_| |  | | (_| \__ \   <
 |_| \_\__,_|_.__/|_.__/|_|\__|_|  |_|\__,_|___/_|\_\
 '''
-import time
+import datetime
 import csv
 
 #列表打印装饰器
@@ -33,7 +33,7 @@ def Save_info(fun):
     def work(*args,**kwargs):
         result=(fun(*args, **kwargs))
         if result:
-            timetoken = str(int(time.time()))
+            timetoken = datetime.datetime.now().strftime('%Y%m%d%H%M%S');
             filename='Output/{}_result_{}.rabbit'.format(fun.__name__,timetoken)
             for i in result:
                 try:
@@ -52,10 +52,9 @@ def Save_Csv(fun):
     def work(*args,**kwargs):
         result=(fun(*args, **kwargs))
         if result:
-            timetoken = str(int(time.time()))
+            timetoken = datetime.datetime.now().strftime('%Y%m%d%H%M%S');
             filename='Output/{}_result_{}.csv'.format(fun.__name__,timetoken)
-
-            with open(filename, 'a') as f:
+            with open(filename, 'a',encoding='utf-8',newline='') as f:
                 head = ['host','ip','port','country','city','server','title']
                 writer = csv.writer(f)
                 # 写入一行数据
@@ -63,7 +62,6 @@ def Save_Csv(fun):
                 # 写入多行数据
                 for i in result:
                     writer.writerow(list(i.values()))
-
             print('结果已保存至：'+filename)
         # return fun(*args, **kwargs)
     return work
