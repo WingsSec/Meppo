@@ -1,5 +1,5 @@
-MOUDLE_NUM=26
-PAYLOAD_NUM=55
+MOUDLE_NUM=27
+PAYLOAD_NUM=57
 
 # AlibabaCanal
 from Moudle.AlibabaCanal import Alibaba_Canal_Info_Leak
@@ -32,6 +32,9 @@ from Moudle.F5 import CVE_2021_22986
 
 # Fikker
 from Moudle.Fikker import Fikker_admin
+
+# H3C
+from Moudle.H3C import IMC_RCE
 
 # Inspur
 from Moudle.Inspur import CVE_2020_21224
@@ -68,6 +71,7 @@ from Moudle.SonarQube import CVE_2020_27986
 
 # Spring
 from Moudle.Spring import CVE_2022_22947
+from Moudle.Spring import CVE_2022_22963
 
 # TDXK
 from Moudle.TDXK import TDXK_Any_file_upload
