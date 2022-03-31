@@ -46,10 +46,13 @@ def Console():
     if args.fofa:
         try:
             if FOFA_API_KEY:
+                print(args.num)
                 if args.num and int(args.num) > 10000:
                     print("Num Don't > 10000 PLS~")
+                elif args.num and int(args.num) <= 10000:
+                    fofaapi.run(args.fofa, args.num)
                 else:
-                    fofaapi.run(args.fofa, 1000)
+                    fofaapi.run(args.fofa,1000)
             else:
                 print("如需使用FofaAPI，请在Config/config_api下完成相关配置")
         except:
