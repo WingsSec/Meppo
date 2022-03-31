@@ -46,7 +46,6 @@ def Console():
     if args.fofa:
         try:
             if FOFA_API_KEY:
-                print(args.num)
                 if args.num and int(args.num) > 10000:
                     print("Num Don't > 10000 PLS~")
                 elif args.num and int(args.num) <= 10000:
