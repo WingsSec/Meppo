@@ -9,9 +9,9 @@
 '''
 import argparse
 
-from Config.config_api import FOFA_API_KEY
+from Config.config_api import FOFA_API_KEY, SHODAN_API_KEY
 from Framework import console_attack
-from Seek import fofaapi
+from Seek import fofaapi, shodanapi
 from Framework.console_attack import get_urls
 from Framework.console_list import moudle_list, payload_list, payload_list_all
 from Moudle.Moudle_index import *
@@ -37,6 +37,7 @@ def Console():
 
     #资产爬取模块
     M_SEEK.add_argument("-fofa", dest='fofa',help="资产爬取")
+    M_SEEK.add_argument("-shodan", dest='shodan',help="资产爬取")
     M_SEEK.add_argument("-num", dest='num',help="资产数量")
 
     args = parser.parse_args()
@@ -56,6 +57,19 @@ def Console():
                 print("如需使用FofaAPI，请在Config/config_api下完成相关配置")
         except:
             print("如需使用FofaAPI，请在Config/config_api下完成相关配置")
+    elif args.shodan:
+        # try:
+            if SHODAN_API_KEY:
+                if args.num and int(args.num) > 1000:
+                    print("Num Don't > 1000 PLS~")
+                elif args.num and int(args.num) <= 1000:
+                    shodanapi.run(args.shodan, args.num)
+                else:
+                    shodanapi.run(args.shodan,1000)
+            else:
+                print("如需使用ShodanAPI，请在Config/config_api下完成相关配置")
+        # except:
+        #     print("如需使用ShodanAPI，请在Config/config_api下完成相关配置")
     elif args.poc:
         try:
             if args.url:
@@ -92,7 +106,9 @@ def Console():
               "\n\tpython Meppo.py -m xxx -u target\t\t单目标 模块监测"
               "\n\tpython Meppo.py -m xxx -f targets.txt\t\t多目标 模块监测"
               "\n\tpython Meppo.py -fofa APP=\"DEMO\"\t\tFOFA API 报告导出 num默认1000"
-              "\n\tpython Meppo.py -fofa APP=\"DEMO\" -num 100\tFOFA API 报告导出 自定义数量")
+              "\n\tpython Meppo.py -fofa APP=\"DEMO\" -num 100\tFOFA API 报告导出 自定义数量"
+              "\n\tpython Meppo.py -shodan APP=\"DEMO\"\t\tSHODAN API 报告导出 num默认1000"
+              "\n\tpython Meppo.py -shodan APP=\"DEMO\" -num 100\tSHODAN API 报告导出 自定义数量")
 
 
 ########################################################################################################################
