@@ -45,7 +45,6 @@ def pocs(target,moudle,q):
 def poolmana(moudle,urls):
     p = Pool(30)
     q = Manager().Queue()
-    print('任务加载数量：'+str(len(urls)))
     for i in urls:
         p.apply_async(pocs, args=(i,moudle,q,),callback=record_res)
     p.close()
@@ -65,6 +64,7 @@ def run_moudle(*args):
             for i in get_payload(args[0]):
                 record_res(eval(i[0]).poc(urlcheck(args[1])))
         elif isinstance(args[1], list):
+            print('任务加载数量：' + str(len(args[1])))
             for i in get_payload(args[0]):
                 poolmana(i[0], args[1])
 
