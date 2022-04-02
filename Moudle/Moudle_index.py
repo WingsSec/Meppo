@@ -1,5 +1,5 @@
 MOUDLE_NUM=27
-PAYLOAD_NUM=57
+PAYLOAD_NUM=59
 
 # AlibabaCanal
 from Moudle.AlibabaCanal import Alibaba_Canal_Info_Leak
@@ -19,6 +19,8 @@ from Moudle.Discuz import discuz_version_change_getshell
 
 # Drupal
 from Moudle.Drupal import CVE_2018_7600
+from Moudle.Drupal import CVE_2018_7600_8
+from Moudle.Drupal import CVE_2019_6340
 
 # ESAFENET
 from Moudle.ESAFENET import CNVD_2021_26058
