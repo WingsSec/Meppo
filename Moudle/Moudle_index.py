@@ -1,5 +1,5 @@
-MOUDLE_NUM=27
-PAYLOAD_NUM=59
+MOUDLE_NUM=28
+PAYLOAD_NUM=60
 
 # AlibabaCanal
 from Moudle.AlibabaCanal import Alibaba_Canal_Info_Leak
@@ -46,6 +46,8 @@ from Moudle.Inspur import Inspur_sysShell_RCE
 # Jeecms
 from Moudle.Jeecms import Jeecms_ssrf_getshell
 
+# Joomla
+
 # Kangle
 from Moudle.Kangle import Kangle_default_password
 
@@ -73,6 +75,7 @@ from Moudle.SonarQube import CVE_2020_27986
 
 # Spring
 from Moudle.Spring import CVE_2022_22947
+from Moudle.Spring import CVE_2022_22963
 from Moudle.Spring import CVE_2022_22965
 
 # TDXK
