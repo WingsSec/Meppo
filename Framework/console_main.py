@@ -78,9 +78,9 @@ def Console():
             elif args.file:
                 console_attack.run_poc(args.poc, get_urls(args.file))
             else:
-                print("Usage:\n\tpython Meppo.py -poc xxx -u http:xxx\n\tpython Meppo.py -poc xxx -f target.txt")
+                status_print("Usage:\n\tpython Meppo.py -poc xxx -u http:xxx\n\tpython Meppo.py -poc xxx -f target.txt",5)
         except:
-            print("Usage:\n\tpython Meppo.py -poc xxx -u http:xxx\n\tpython Meppo.py -poc xxx -f target.txt")
+            status_print("Usage:\n\tpython Meppo.py -poc xxx -u http:xxx\n\tpython Meppo.py -poc xxx -f target.txt",5)
     elif args.moudle:
         try:
             if args.list:
@@ -90,15 +90,15 @@ def Console():
             elif args.file:
                 console_attack.run_moudle(args.moudle, get_urls(args.file))
             else:
-                print("Usage:\n\tpython Meppo.py -m -l\n\tpython Meppo.py -m xxx -u http:xxx\n\tpython Meppo.py -m -f target.txt")
+                status_print("Usage:\n\tpython Meppo.py -m -l\n\tpython Meppo.py -m xxx -u http:xxx\n\tpython Meppo.py -m -f target.txt",5)
         except:
-            print("Usage:\n\tpython Meppo.py -m -l\n\tpython Meppo.py -m xxx -u http:xxx\n\tpython Meppo.py -m -f target.txt")
+            status_print("Usage:\n\tpython Meppo.py -m -l\n\tpython Meppo.py -m xxx -u http:xxx\n\tpython Meppo.py -m -f target.txt",5)
     elif args.list:
         moudle_list()
     elif args.listall:
         payload_list_all()
     else:
-        print("Usage:"
+        status_print("Usage:"
               "\n\tpython Meppo.py -l\t\t\t\tList All Moudles"
               "\n\tpython Meppo.py -ll\t\t\t\tList All Payloads"
               "\n\tpython Meppo.py -m xxx -l\t\t\tList Payload Of The Moudle"
@@ -109,7 +109,7 @@ def Console():
               "\n\tpython Meppo.py -fofa APP=\"DEMO\"\t\tFOFA API 报告导出 num默认1000"
               "\n\tpython Meppo.py -fofa APP=\"DEMO\" -num 100\tFOFA API 报告导出 自定义数量"
               "\n\tpython Meppo.py -shodan APP=\"DEMO\"\t\tSHODAN API 报告导出 num默认1000"
-              "\n\tpython Meppo.py -shodan APP=\"DEMO\" -num 100\tSHODAN API 报告导出 自定义数量")
+              "\n\tpython Meppo.py -shodan APP=\"DEMO\" -num 100\tSHODAN API 报告导出 自定义数量",5)
 
 
 ########################################################################################################################
