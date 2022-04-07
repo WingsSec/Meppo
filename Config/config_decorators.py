@@ -11,6 +11,9 @@ import datetime
 import csv
 
 #列表打印装饰器
+from Config.config_print import status_print
+
+
 def Print_info(fun):
     def work(*args,**kwargs):
         res=fun(*args, **kwargs)
@@ -42,7 +45,7 @@ def Save_info(fun):
                     fw.close()
                 except:
                     pass
-            print('结果已保存至：'+filename)
+            status_print('结果已保存至：'+filename,1)
         # return fun(*args, **kwargs)
     return work
 
@@ -62,6 +65,6 @@ def Save_Csv(fun):
                 # 写入多行数据
                 for i in result:
                     writer.writerow(list(i.values()))
-            print('结果已保存至：'+filename)
+            status_print('结果已保存至：'+filename,1)
         # return fun(*args, **kwargs)
     return work
