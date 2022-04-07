@@ -9,6 +9,8 @@
 '''
 import datetime
 from multiprocessing import Pool, Manager
+
+from Config.config_print import status_print
 from Tools.ReBuild import get_payload
 from Config.config_logging import loglog
 from Moudle.Moudle_index import *
@@ -34,7 +36,7 @@ def record_res(dic):
         for key in dic:
             value = dic[key]
             res=res+str(key)+' : '+str(value)+'\t'
-        print(res)
+        status_print(res,1)
         loglog(res)
 
 
@@ -64,7 +66,7 @@ def run_moudle(*args):
             for i in get_payload(args[0]):
                 record_res(eval(i[0]).poc(urlcheck(args[1])))
         elif isinstance(args[1], list):
-            print('任务加载数量：' + str(len(args[1])))
+            status_print('任务加载数量：' + str(len(args[1])),0)
             for i in get_payload(args[0]):
                 poolmana(i[0], args[1])
 

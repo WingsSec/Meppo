@@ -10,6 +10,7 @@
 import argparse
 
 from Config.config_api import FOFA_API_KEY, SHODAN_API_KEY
+from Config.config_print import status_print
 from Framework import console_attack
 from Seek import fofaapi, shodanapi
 from Framework.console_attack import get_urls
@@ -48,26 +49,26 @@ def Console():
         try:
             if FOFA_API_KEY:
                 if args.num and int(args.num) > 10000:
-                    print("Num Don't > 10000 PLS~")
+                    status_print("Num Don't > 10000 PLS~",2)
                 elif args.num and int(args.num) <= 10000:
                     fofaapi.run(args.fofa, args.num)
                 else:
                     fofaapi.run(args.fofa,1000)
             else:
-                print("如需使用FofaAPI，请在Config/config_api下完成相关配置")
+                status_print("如需使用FofaAPI，请在Config/config_api下完成相关配置",2)
         except:
-            print("如需使用FofaAPI，请在Config/config_api下完成相关配置")
+            status_print("如需使用FofaAPI，请在Config/config_api下完成相关配置",2)
     elif args.shodan:
         # try:
             if SHODAN_API_KEY:
                 if args.num and int(args.num) > 1000:
-                    print("Num Don't > 1000 PLS~")
+                    status_print("Num Don't > 1000 PLS~",2)
                 elif args.num and int(args.num) <= 1000:
                     shodanapi.run(args.shodan, args.num)
                 else:
                     shodanapi.run(args.shodan,1000)
             else:
-                print("如需使用ShodanAPI，请在Config/config_api下完成相关配置")
+                status_print("如需使用ShodanAPI，请在Config/config_api下完成相关配置",2)
         # except:
         #     print("如需使用ShodanAPI，请在Config/config_api下完成相关配置")
     elif args.poc:
