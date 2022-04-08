@@ -33,6 +33,8 @@ Usage:
         python Meppo.py -m xxx -f targets.txt           多目标 模块监测
         python Meppo.py -fofa APP="DEMO"                FOFA API 报告导出 num默认1000
         python Meppo.py -fofa APP="DEMO" -num 100       FOFA API 报告导出 自定义数量
+        python Meppo.py -hunter APP="DEMO"              HUNTER API 报告导出 num默认1000
+        python Meppo.py -hunter APP="DEMO" -num 100     SHODAN HUNTER 报告导出 自定义数量
         python Meppo.py -shodan APP="DEMO"              SHODAN API 报告导出 num默认1000
         python Meppo.py -shodan APP="DEMO" -num 100     SHODAN API 报告导出 自定义数量
 
@@ -63,8 +65,10 @@ options:
 
 资产爬取模块:
   -fofa FOFA      资产爬取
+  -hunter HUNTER  资产爬取
   -shodan SHODAN  资产爬取
   -num NUM        资产数量
+
 ```
 ```angular2html
    _____                               
