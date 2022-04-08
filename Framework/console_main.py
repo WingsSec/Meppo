@@ -9,10 +9,10 @@
 '''
 import argparse
 
-from Config.config_api import FOFA_API_KEY, SHODAN_API_KEY
+from Config.config_api import FOFA_API_KEY, SHODAN_API_KEY, HUNTER_API_KEY
 from Config.config_print import status_print
 from Framework import console_attack
-from Seek import fofaapi, shodanapi
+from Seek import fofaapi, shodanapi, hunterapi
 from Framework.console_attack import get_urls
 from Framework.console_list import moudle_list, payload_list, payload_list_all
 from Moudle.Moudle_index import *
@@ -38,6 +38,7 @@ def Console():
 
     #资产爬取模块
     M_SEEK.add_argument("-fofa", dest='fofa',help="资产爬取")
+    M_SEEK.add_argument("-hunter", dest='hunter',help="资产爬取")
     M_SEEK.add_argument("-shodan", dest='shodan',help="资产爬取")
     M_SEEK.add_argument("-num", dest='num',help="资产数量")
 
@@ -56,10 +57,10 @@ def Console():
                     fofaapi.run(args.fofa,1000)
             else:
                 status_print("如需使用FofaAPI，请在Config/config_api下完成相关配置",2)
-        except:
-            status_print("如需使用FofaAPI，请在Config/config_api下完成相关配置",2)
+        except Exception as e:
+            status_print("FofaAPI发生错误，%s"%e,3)
     elif args.shodan:
-        # try:
+        try:
             if SHODAN_API_KEY:
                 if args.num and int(args.num) > 1000:
                     status_print("Num Don't > 1000 PLS~",2)
@@ -69,8 +70,21 @@ def Console():
                     shodanapi.run(args.shodan,1000)
             else:
                 status_print("如需使用ShodanAPI，请在Config/config_api下完成相关配置",2)
-        # except:
-        #     print("如需使用ShodanAPI，请在Config/config_api下完成相关配置")
+        except Exception as e:
+            status_print("ShodanAPI发生错误，%s" % e, 3)
+    elif args.hunter:
+        try:
+            if HUNTER_API_KEY:
+                if args.num and int(args.num) > 10000:
+                    status_print("Num Don't > 10000 PLS~",2)
+                elif args.num and int(args.num) <= 1000:
+                    hunterapi.run(args.hunter, args.num)
+                else:
+                    hunterapi.run(args.hunter,1000)
+            else:
+                status_print("如需使用HunterAPI，请在Config/config_api下完成相关配置",2)
+        except Exception as e:
+            status_print("HunterAPI发生错误，%s" % e, 3)
     elif args.poc:
         try:
             if args.url:
@@ -108,6 +122,8 @@ def Console():
               "\n\tpython Meppo.py -m xxx -f targets.txt\t\t多目标 模块监测"
               "\n\tpython Meppo.py -fofa APP=\"DEMO\"\t\tFOFA API 报告导出 num默认1000"
               "\n\tpython Meppo.py -fofa APP=\"DEMO\" -num 100\tFOFA API 报告导出 自定义数量"
+              "\n\tpython Meppo.py -hunter APP=\"DEMO\"\t\tHUNTER API 报告导出 num默认1000"
+              "\n\tpython Meppo.py -hunter APP=\"DEMO\" -num 100\tSHODAN HUNTER 报告导出 自定义数量"
               "\n\tpython Meppo.py -shodan APP=\"DEMO\"\t\tSHODAN API 报告导出 num默认1000"
               "\n\tpython Meppo.py -shodan APP=\"DEMO\" -num 100\tSHODAN API 报告导出 自定义数量",5)
 
