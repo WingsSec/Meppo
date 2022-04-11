@@ -37,6 +37,7 @@ def poc(target):
                 if rep3.status_code == 200:
                     result['target'] = target
                     result['poc'] = NAME
+                    return result
     except:
         pass
 
