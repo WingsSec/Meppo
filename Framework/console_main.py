@@ -58,7 +58,7 @@ def Console():
             else:
                 status_print("如需使用FofaAPI，请在Config/config_api下完成相关配置",2)
         except Exception as e:
-            status_print("FofaAPI发生错误，%s"%e,3)
+            status_print("发生错误，%s"%e,3)
     elif args.shodan:
         try:
             if SHODAN_API_KEY:
@@ -71,7 +71,7 @@ def Console():
             else:
                 status_print("如需使用ShodanAPI，请在Config/config_api下完成相关配置",2)
         except Exception as e:
-            status_print("ShodanAPI发生错误，%s" % e, 3)
+            status_print("发生错误，%s" % e, 3)
     elif args.hunter:
         try:
             if HUNTER_API_KEY:
@@ -84,7 +84,7 @@ def Console():
             else:
                 status_print("如需使用HunterAPI，请在Config/config_api下完成相关配置",2)
         except Exception as e:
-            status_print("HunterAPI发生错误，%s" % e, 3)
+            status_print("发生错误，%s" % e, 3)
     elif args.poc:
         try:
             if args.url:
@@ -93,8 +93,8 @@ def Console():
                 console_attack.run_poc(args.poc, get_urls(args.file))
             else:
                 status_print("Usage:\n\tpython Meppo.py -poc xxx -u http:xxx\n\tpython Meppo.py -poc xxx -f target.txt",5)
-        except:
-            status_print("Usage:\n\tpython Meppo.py -poc xxx -u http:xxx\n\tpython Meppo.py -poc xxx -f target.txt",5)
+        except Exception as e:
+            status_print("发生错误：%s" % e, 3)
     elif args.moudle:
         try:
             if args.list:
@@ -105,8 +105,8 @@ def Console():
                 console_attack.run_moudle(args.moudle, get_urls(args.file))
             else:
                 status_print("Usage:\n\tpython Meppo.py -m -l\n\tpython Meppo.py -m xxx -u http:xxx\n\tpython Meppo.py -m -f target.txt",5)
-        except:
-            status_print("Usage:\n\tpython Meppo.py -m -l\n\tpython Meppo.py -m xxx -u http:xxx\n\tpython Meppo.py -m -f target.txt",5)
+        except Exception as e:
+            status_print("发生错误：%s" % e, 3)
     elif args.list:
         moudle_list()
     elif args.listall:
