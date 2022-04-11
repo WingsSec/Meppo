@@ -58,7 +58,7 @@ def ve_system_poc(target):
         else:
             return "linux"
     else:
-        return None
+        return True
 
 def poc(target):
     result = {}
