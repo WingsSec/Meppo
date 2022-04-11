@@ -42,7 +42,12 @@ def record_res(dic):
 
 def pocs(target,moudle,q):
     q.put(target)
-    return eval(moudle).poc(target)
+    res=""
+    try:
+        res=eval(moudle).poc(target)
+    except:
+        pass
+    return res
 
 def poolmana(moudle,urls):
     p = Pool(30)
