@@ -33,9 +33,8 @@ def api():
         poc = request.args.get('poc')
         target = request.args.get('target')
         data = run_poc_api(poc, target)
-        res={}
         if data:
-            res=  {'msg':'success','data':data}
+            res =  {'msg':'success','data':data}
         else:
             res = {'msg': 'fail', 'data':'NULL'}
         return res
@@ -54,4 +53,4 @@ def list():
 
 if __name__ == '__main__':
     Banner()
-    app.run(host='0.0.0.0', port=1988, debug=True)
+    app.run(host='0.0.0.0', port=1988, debug=False)
