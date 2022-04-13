@@ -12,7 +12,7 @@ import random
 from Config.config_print import status_print
 from Moudle.Moudle_index import PAYLOAD_NUM, MOUDLE_NUM
 
-Version = 'V 2.0'
+Version = 'V 2.1'
 info = '\n\t\t漏洞检测框架 Meppo | By WingsSec | {}\n'.format(Version)
 NUM='\t\t  [ {} MOUDLES\t\t{} PAYLOADS ]'.format(str(MOUDLE_NUM).center(3),str(PAYLOAD_NUM).center(3))
 

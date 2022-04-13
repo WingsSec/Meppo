@@ -27,8 +27,8 @@
  |_|  |_|\___| .__/| .__/ \___/
              |_|   |_|
 
-                漏洞检测框架 Meppo | By WingsSec | V 2.0
-                  [  28 MOUDLES          60 PAYLOADS ]
+                漏洞检测框架 Meppo | By WingsSec | V 2.1
+                  [  30 MOUDLES          64 PAYLOADS ]
 Usage:
         python Meppo.py -l                              List All Moudles
         python Meppo.py -ll                             List All Payloads
@@ -54,8 +54,8 @@ Usage:
 /_/  /_/\___/ .___/ .___/\____/
            /_/   /_/
 
-                漏洞检测框架 Meppo | By WingsSec | V 2.0
-                  [  28 MOUDLES          60 PAYLOADS ]
+                漏洞检测框架 Meppo | By WingsSec | V 2.1
+                  [  30 MOUDLES          64 PAYLOADS ]
 usage: Meppo.py [-h] [-l] [-ll] [-m MOUDLE] [-u URL] [-f FILE] [-poc POC] [-fofa FOFA] [-shodan SHODAN] [-num NUM]
 
 options:
@@ -84,8 +84,8 @@ options:
 \____|__  /\___  >   __/|   __/ \____/ 
         \/     \/|__|   |__|
 
-                漏洞检测框架 Meppo | By WingsSec | V 2.0
-                  [  28 MOUDLES          60 PAYLOADS ]
+                漏洞检测框架 Meppo | By WingsSec | V 2.1
+                  [  30 MOUDLES          64 PAYLOADS ]
                                                 【Payload List】                                                
 ==================================================================================================================
 |       Moudle       |           Payload            |                           Remark                           |

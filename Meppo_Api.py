@@ -29,15 +29,17 @@ def home():
 #
 @app.route('/api', methods=['GET'])
 def api():
-    poc = request.args.get('poc')
-    target = request.args.get('target')
-    data = run_poc_api(poc, target)
-    res={}
-    if data:
-        res=  {'msg':'success','data':data}
-    else:
-        res = {'msg': 'fail', 'data':'NULL'}
-    return res
+    try:
+        poc = request.args.get('poc')
+        target = request.args.get('target')
+        data = run_poc_api(poc, target)
+        if data:
+            res =  {'msg':'success','data':data}
+        else:
+            res = {'msg': 'fail', 'data':'NULL'}
+        return res
+    except:
+        return 'Usage:<br>&emsp;&emsp;&emsp;&emsp;/api?poc=Test&target=http://127.0.0.1'
 
 
 @app.route('/list', methods=['GET'])
