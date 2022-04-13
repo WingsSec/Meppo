@@ -13,7 +13,7 @@ requests.packages.urllib3.disable_warnings()
 NAME = 'CVE_2018_1000861'
 AUTHOR = "RabbitMask"
 REMARK = 'Jenkins远程命令执行漏洞'
-FOFA_RULE = '对应漏洞框架的fofa语法'
+FOFA_RULE = 'app="Jenkins"'
 
 ########################################################################################################################
 # 漏洞检测模块

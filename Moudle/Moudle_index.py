@@ -1,5 +1,5 @@
-MOUDLE_NUM=29
-PAYLOAD_NUM=62
+MOUDLE_NUM=30
+PAYLOAD_NUM=64
 
 # AlibabaCanal
 from Moudle.AlibabaCanal import Alibaba_Canal_Info_Leak
@@ -48,6 +48,7 @@ from Moudle.Jeecms import Jeecms_ssrf_getshell
 
 # Jenkins
 from Moudle.Jenkins import CVE_2018_1000861
+from Moudle.Jenkins import UnauthorizedScript
 
 # Joomla
 from Moudle.Joomla import joomla_config_find
@@ -73,6 +74,9 @@ from Moudle.Seeyon import Information_seeyou
 from Moudle.Seeyon import Seeyon_OA_SessionLeak_Upload
 from Moudle.Seeyon import Seeyon_OA_Session_Leak
 from Moudle.Seeyon import Seeyon_OA_SQLInjection
+
+# ShowDoc
+from Moudle.ShowDoc import CNVD_2020_26585
 
 # SonarQube
 from Moudle.SonarQube import CVE_2020_27986

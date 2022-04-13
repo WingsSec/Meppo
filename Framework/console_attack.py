@@ -11,6 +11,7 @@ import datetime
 from multiprocessing import Pool, Manager
 
 from Config.config_print import status_print
+from Tools.NoRepeat import Norepeat
 from Tools.ReBuild import get_payload
 from Config.config_logging import loglog
 from Moudle.Moudle_index import *
@@ -28,7 +29,7 @@ def get_urls(file):
     res=[]
     for i in r:
         res.append(urlcheck(i).replace('\n',''))
-    return res
+    return Norepeat(res)
 
 def record_res(dic):
     if dic:
@@ -39,7 +40,7 @@ def record_res(dic):
         status_print(res,1)
         loglog(res)
 
-
+# 讲道理，框架不该对脚本做异常屏蔽的，但是孩子们不听话，不做异常捕获，导致批量异常相互干扰，先启用吧
 def pocs(target,moudle,q):
     q.put(target)
     res=""
@@ -63,6 +64,7 @@ def run_poc(*args):
         if isinstance(args[1],str):
             record_res(eval(args[0]).poc(urlcheck(args[1])))
         elif isinstance(args[1], list):
+            status_print('任务加载数量：' + str(len(args[1])), 0)
             poolmana(args[0], args[1])
 
 def run_moudle(*args):
