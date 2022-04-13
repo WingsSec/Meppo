@@ -7,9 +7,7 @@
 |  _ < (_| | |_) | |_) | | |_| |  | | (_| \__ \   <
 |_| \_\__,_|_.__/|_.__/|_|\__|_|  |_|\__,_|___/_|\_\
 '''
-import datetime
 from multiprocessing import Pool, Manager
-
 from Config.config_print import status_print
 from Tools.NoRepeat import Norepeat
 from Tools.ReBuild import get_payload
@@ -33,7 +31,7 @@ def get_urls(file):
 
 def record_res(dic):
     if dic:
-        res='['+datetime.datetime.now().strftime('%X')+']  '
+        res=''
         for key in dic:
             value = dic[key]
             res=res+str(key)+' : '+str(value)+'\t'
@@ -57,6 +55,11 @@ def poolmana(moudle,urls):
         p.apply_async(pocs, args=(i,moudle,q,),callback=record_res)
     p.close()
     p.join()
+
+def run_poc_api(poc,target):
+    res=eval(poc).poc(urlcheck(target))
+    record_res(res)
+    return res
 
 
 def run_poc(*args):
