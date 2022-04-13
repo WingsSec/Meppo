@@ -29,15 +29,18 @@ def home():
 #
 @app.route('/api', methods=['GET'])
 def api():
-    poc = request.args.get('poc')
-    target = request.args.get('target')
-    data = run_poc_api(poc, target)
-    res={}
-    if data:
-        res=  {'msg':'success','data':data}
-    else:
-        res = {'msg': 'fail', 'data':'NULL'}
-    return res
+    try:
+        poc = request.args.get('poc')
+        target = request.args.get('target')
+        data = run_poc_api(poc, target)
+        res={}
+        if data:
+            res=  {'msg':'success','data':data}
+        else:
+            res = {'msg': 'fail', 'data':'NULL'}
+        return res
+    except:
+        return 'Usage:<br>&emsp;&emsp;&emsp;&emsp;/api?poc=Test&target=http://127.0.0.1'
 
 
 @app.route('/list', methods=['GET'])
@@ -51,4 +54,4 @@ def list():
 
 if __name__ == '__main__':
     Banner()
-    app.run(host='0.0.0.0', port=1988, debug=False)
+    app.run(host='0.0.0.0', port=1988, debug=True)
