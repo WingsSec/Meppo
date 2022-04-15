@@ -43,7 +43,8 @@ Usage:
         python Meppo.py -hunter APP="DEMO" -num 100     SHODAN HUNTER 报告导出 自定义数量
         python Meppo.py -shodan APP="DEMO"              SHODAN API 报告导出 num默认1000
         python Meppo.py -shodan APP="DEMO" -num 100     SHODAN API 报告导出 自定义数量
-
+        python Meppo.py -server                         启动API服务 默认1988端口
+        python Meppo.py -server -port 1988              启动API服务 自定义端口
 
 ```
 ```angular2html
@@ -74,6 +75,10 @@ options:
   -hunter HUNTER  资产爬取
   -shodan SHODAN  资产爬取
   -num NUM        资产数量
+
+API服务模块:
+  -server         启动API服务
+  -port PORT      监听端口
 
 ```
 ```angular2html

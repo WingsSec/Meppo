@@ -6,6 +6,7 @@ import requests
 
 from Config.config_decorators import Save_Csv
 from Config.config_api import FOFA_EAMIL, FOFA_API_KEY
+from Tools.SaveHosts import gethosts
 
 
 def fofaapi(keyword,num):
@@ -15,7 +16,7 @@ def fofaapi(keyword,num):
     bs64 = bs64.decode()
     res = requests.get('https://fofa.info/api/v1/search/all?email={}&key={}&qbase64={}&fields=host,ip,port,country,city,server,title&size={}'.format(FOFA_EAMIL,FOFA_API_KEY,bs64,str(num)))
     result = res.json()['results']
-    # print(result)
+    hosts=[]
     for i in result:
         dic={}
         dic['host'] = i[0]
@@ -26,7 +27,9 @@ def fofaapi(keyword,num):
         dic['server'] = i[5]
         dic['title'] = i[6]
         reslist.append(dic)
+        hosts.append(i[0])
         print(dic)
+    gethosts(hosts)
     return reslist
 
 @Save_Csv
