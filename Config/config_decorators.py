@@ -65,6 +65,6 @@ def Save_Csv(fun):
                 # 写入多行数据
                 for i in result:
                     writer.writerow(list(i.values()))
-            status_print('结果已保存至：'+filename,1)
+            status_print('全部结果已保存至：'+filename,1)
         # return fun(*args, **kwargs)
     return work

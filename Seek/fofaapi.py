@@ -27,6 +27,7 @@ def fofaapi(keyword,num):
         dic['server'] = i[5]
         dic['title'] = i[6]
         reslist.append(dic)
+        hosts.append(i[0])
         print(dic)
     gethosts(hosts)
     return reslist

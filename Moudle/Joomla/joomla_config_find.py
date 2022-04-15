@@ -2,11 +2,10 @@
 # _*_ coding:utf-8 _*_
 
 import requests
-import requests.packages.urllib3
 from Config.config_requests import ua
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
-requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+
+requests.packages.urllib3.disable_warnings()
 
 
 # 脚本信息

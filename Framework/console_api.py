@@ -16,7 +16,10 @@
 
 from Config.config_banner import Banner
 from flask import Flask
+from gevent import pywsgi
 from flask import request
+
+from Config.config_print import status_print
 from Framework.console_attack import run_poc_api
 from Tools.ReBuild import get_moudle, get_payload
 
@@ -50,6 +53,10 @@ def list():
         res[i]=get_payload(i)
     return res
 
+def run(port=1988):
+    status_print('服务已启动：'+'0.0.0.0:'+str(port))
+    server = pywsgi.WSGIServer(('0.0.0.0', port), app)
+    server.serve_forever()
 
 if __name__ == '__main__':
     Banner()
