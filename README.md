@@ -10,6 +10,12 @@
             优化框架交互，优化多种消息的颜色等级提示
             继fofa之后新增shodan、hunter API导出
             进一步丰富和优化脚本
+##### V2.1 `2022-04-13` 
+            新增API接口，简单实现单poc+单目标调度需求
+            /list 用于查询所有moudles和payloads
+            /api  传入poc和target参数即可实现交互
+            鉴于并发对前后端异步和服务器资源的依赖，so，穷！
+            进一步丰富和优化脚本
 
 ![](show.png)
 
@@ -21,8 +27,8 @@
  |_|  |_|\___| .__/| .__/ \___/
              |_|   |_|
 
-                漏洞检测框架 Meppo | By WingsSec | V 2.0
-                  [  28 MOUDLES          60 PAYLOADS ]
+                漏洞检测框架 Meppo | By WingsSec | V 2.1
+                  [  30 MOUDLES          64 PAYLOADS ]
 Usage:
         python Meppo.py -l                              List All Moudles
         python Meppo.py -ll                             List All Payloads
@@ -37,7 +43,8 @@ Usage:
         python Meppo.py -hunter APP="DEMO" -num 100     SHODAN HUNTER 报告导出 自定义数量
         python Meppo.py -shodan APP="DEMO"              SHODAN API 报告导出 num默认1000
         python Meppo.py -shodan APP="DEMO" -num 100     SHODAN API 报告导出 自定义数量
-
+        python Meppo.py -server                         启动API服务 默认1988端口
+        python Meppo.py -server -port 1988              启动API服务 自定义端口
 
 ```
 ```angular2html
@@ -48,8 +55,8 @@ Usage:
 /_/  /_/\___/ .___/ .___/\____/
            /_/   /_/
 
-                漏洞检测框架 Meppo | By WingsSec | V 2.0
-                  [  28 MOUDLES          60 PAYLOADS ]
+                漏洞检测框架 Meppo | By WingsSec | V 2.1
+                  [  30 MOUDLES          64 PAYLOADS ]
 usage: Meppo.py [-h] [-l] [-ll] [-m MOUDLE] [-u URL] [-f FILE] [-poc POC] [-fofa FOFA] [-shodan SHODAN] [-num NUM]
 
 options:
@@ -69,6 +76,10 @@ options:
   -shodan SHODAN  资产爬取
   -num NUM        资产数量
 
+API服务模块:
+  -server         启动API服务
+  -port PORT      监听端口
+
 ```
 ```angular2html
    _____                               
@@ -78,8 +89,8 @@ options:
 \____|__  /\___  >   __/|   __/ \____/ 
         \/     \/|__|   |__|
 
-                漏洞检测框架 Meppo | By WingsSec | V 2.0
-                  [  28 MOUDLES          60 PAYLOADS ]
+                漏洞检测框架 Meppo | By WingsSec | V 2.1
+                  [  30 MOUDLES          64 PAYLOADS ]
                                                 【Payload List】                                                
 ==================================================================================================================
 |       Moudle       |           Payload            |                           Remark                           |

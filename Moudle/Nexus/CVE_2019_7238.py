@@ -2,8 +2,6 @@
 # _*_ coding:utf-8 _*_
 
 import requests
-import requests.packages.urllib3
-
 requests.packages.urllib3.disable_warnings()
 
 

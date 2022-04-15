@@ -12,6 +12,7 @@ import argparse
 from Config.config_api import FOFA_API_KEY, SHODAN_API_KEY, HUNTER_API_KEY
 from Config.config_print import status_print
 from Framework import console_attack
+from Framework import console_api
 from Seek import fofaapi, shodanapi, hunterapi
 from Framework.console_attack import get_urls
 from Framework.console_list import moudle_list, payload_list, payload_list_all
@@ -23,6 +24,7 @@ def Console():
     parser = argparse.ArgumentParser()
     M_POC = parser.add_argument_group('漏洞检测模块')
     M_SEEK = parser.add_argument_group('资产爬取模块')
+    M_API = parser.add_argument_group('API服务模块')
 
 ########################################################################################################################
     parser.add_argument("-l", dest='list',help="list",action='store_true')
@@ -42,6 +44,10 @@ def Console():
     M_SEEK.add_argument("-shodan", dest='shodan',help="资产爬取")
     M_SEEK.add_argument("-num", dest='num',help="资产数量")
 
+    #API服务模块
+    M_API.add_argument("-server", help="启动API服务", action='store_true')
+    M_API.add_argument("-port", dest='port',help="监听端口")
+
     args = parser.parse_args()
 
 ########################################################################################################################
@@ -58,7 +64,7 @@ def Console():
             else:
                 status_print("如需使用FofaAPI，请在Config/config_api下完成相关配置",2)
         except Exception as e:
-            status_print("FofaAPI发生错误，%s"%e,3)
+            status_print("发生错误，%s"%e,3)
     elif args.shodan:
         try:
             if SHODAN_API_KEY:
@@ -71,7 +77,7 @@ def Console():
             else:
                 status_print("如需使用ShodanAPI，请在Config/config_api下完成相关配置",2)
         except Exception as e:
-            status_print("ShodanAPI发生错误，%s" % e, 3)
+            status_print("发生错误，%s" % e, 3)
     elif args.hunter:
         try:
             if HUNTER_API_KEY:
@@ -84,7 +90,7 @@ def Console():
             else:
                 status_print("如需使用HunterAPI，请在Config/config_api下完成相关配置",2)
         except Exception as e:
-            status_print("HunterAPI发生错误，%s" % e, 3)
+            status_print("发生错误，%s" % e, 3)
     elif args.poc:
         try:
             if args.url:
@@ -93,8 +99,8 @@ def Console():
                 console_attack.run_poc(args.poc, get_urls(args.file))
             else:
                 status_print("Usage:\n\tpython Meppo.py -poc xxx -u http:xxx\n\tpython Meppo.py -poc xxx -f target.txt",5)
-        except:
-            status_print("Usage:\n\tpython Meppo.py -poc xxx -u http:xxx\n\tpython Meppo.py -poc xxx -f target.txt",5)
+        except Exception as e:
+            status_print("发生错误：%s" % e, 3)
     elif args.moudle:
         try:
             if args.list:
@@ -105,27 +111,34 @@ def Console():
                 console_attack.run_moudle(args.moudle, get_urls(args.file))
             else:
                 status_print("Usage:\n\tpython Meppo.py -m -l\n\tpython Meppo.py -m xxx -u http:xxx\n\tpython Meppo.py -m -f target.txt",5)
-        except:
-            status_print("Usage:\n\tpython Meppo.py -m -l\n\tpython Meppo.py -m xxx -u http:xxx\n\tpython Meppo.py -m -f target.txt",5)
+        except Exception as e:
+            status_print("发生错误：%s" % e, 3)
     elif args.list:
         moudle_list()
     elif args.listall:
         payload_list_all()
+    elif args.server:
+        if args.port:
+            console_api.run(args.port)
+        else:
+            console_api.run()
     else:
         status_print("Usage:"
-              "\n\tpython Meppo.py -l\t\t\t\tList All Moudles"
-              "\n\tpython Meppo.py -ll\t\t\t\tList All Payloads"
-              "\n\tpython Meppo.py -m xxx -l\t\t\tList Payload Of The Moudle"
-              "\n\tpython Meppo.py -poc xxx -u target\t\t单目标 单POC监测"
-              "\n\tpython Meppo.py -poc xxx -f targets.txt\t\t多目标 单POC监测"
-              "\n\tpython Meppo.py -m xxx -u target\t\t单目标 模块监测"
-              "\n\tpython Meppo.py -m xxx -f targets.txt\t\t多目标 模块监测"
-              "\n\tpython Meppo.py -fofa APP=\"DEMO\"\t\tFOFA API 报告导出 num默认1000"
-              "\n\tpython Meppo.py -fofa APP=\"DEMO\" -num 100\tFOFA API 报告导出 自定义数量"
-              "\n\tpython Meppo.py -hunter APP=\"DEMO\"\t\tHUNTER API 报告导出 num默认1000"
-              "\n\tpython Meppo.py -hunter APP=\"DEMO\" -num 100\tSHODAN HUNTER 报告导出 自定义数量"
-              "\n\tpython Meppo.py -shodan APP=\"DEMO\"\t\tSHODAN API 报告导出 num默认1000"
-              "\n\tpython Meppo.py -shodan APP=\"DEMO\" -num 100\tSHODAN API 报告导出 自定义数量",5)
+                "\n\tpython Meppo.py -l\t\t\t\tList All Moudles"
+                "\n\tpython Meppo.py -ll\t\t\t\tList All Payloads"
+                "\n\tpython Meppo.py -m xxx -l\t\t\tList Payload Of The Moudle"
+                "\n\tpython Meppo.py -poc xxx -u target\t\t单目标 单POC监测"
+                "\n\tpython Meppo.py -poc xxx -f targets.txt\t\t多目标 单POC监测"
+                "\n\tpython Meppo.py -m xxx -u target\t\t单目标 模块监测"
+                "\n\tpython Meppo.py -m xxx -f targets.txt\t\t多目标 模块监测"
+                "\n\tpython Meppo.py -fofa APP=\"DEMO\"\t\tFOFA API 报告导出 num默认1000"
+                "\n\tpython Meppo.py -fofa APP=\"DEMO\" -num 100\tFOFA API 报告导出 自定义数量"
+                "\n\tpython Meppo.py -hunter APP=\"DEMO\"\t\tHUNTER API 报告导出 num默认1000"
+                "\n\tpython Meppo.py -hunter APP=\"DEMO\" -num 100\tSHODAN HUNTER 报告导出 自定义数量"
+                "\n\tpython Meppo.py -shodan APP=\"DEMO\"\t\tSHODAN API 报告导出 num默认1000"
+                "\n\tpython Meppo.py -shodan APP=\"DEMO\" -num 100\tSHODAN API 报告导出 自定义数量"
+                "\n\tpython Meppo.py -server\t\t\t\t启动API服务 默认1988端口"
+                "\n\tpython Meppo.py -server -port 1988\t\t启动API服务 自定义端口",5)
 
 
 ########################################################################################################################
