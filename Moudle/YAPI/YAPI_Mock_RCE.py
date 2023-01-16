@@ -22,7 +22,7 @@ def genrandom(size=6, chars=string.ascii_lowercase + string.digits):
 def getversion(url):
     result = {}
     headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36"
+        "User-Agent": ua
     }
     url1 = url + "/prd/assets.js"
     try:
