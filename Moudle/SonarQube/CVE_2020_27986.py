@@ -3,8 +3,8 @@
 
 import requests
 from Config.config_requests import ua
-from requests.packages.urllib3.exceptions import InsecurePlatformWarning
 
+requests.packages.urllib3.disable_warnings()
 
 # 脚本信息
 ######################################################
@@ -19,7 +19,6 @@ def poc(target):
     url = target + "/api/settings/values"
     headers = {"UserAgent":ua}
     try:
-        requests.packages.urllib3.disable_warnings(InsecurePlatformWarning)
         r = requests.get(url=url,headers=headers,verify=False,timeout=3)
         if "key" in r.text and r.status_code ==200:
             result['target'] = target

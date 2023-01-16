@@ -3,11 +3,11 @@
 
 import base64
 import requests
-import requests.packages.urllib3
+from Config.config_proxies import proxies
 from Config.config_requests import headers
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
-requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+
+requests.packages.urllib3.disable_warnings()
 
 
 # 脚本信息
@@ -30,7 +30,7 @@ def poc(target):
             'encode_type': '1',
         }
 
-        res = requests.post(vul_url, headers=headers,data=postdata, verify=False,timeout=10)
+        res = requests.post(vul_url, headers=headers,data=postdata, verify=False,timeout=10,proxies=proxies)
         if 'goto_oa' in res.text:
             result['target'] = target
             result['poc'] = NAME

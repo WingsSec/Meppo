@@ -3,10 +3,10 @@
 
 
 import requests
-from Config.config_requests import ua
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
-requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+from Config.config_proxies import proxies
+from Config.config_requests import ua
+requests.packages.urllib3.disable_warnings()
 
 # 脚本信息
 ######################################################
@@ -21,8 +21,8 @@ def poc(target):
     vuln_url1 = target + '/ws_utc/login.do'
     vuln_url2 = target + '/ws_utc/config.do'
     headers = {"User-Agent":ua}
-    r1 = requests.get(vuln_url1,headers=headers,timeout=3)
-    r2 = requests.get(vuln_url2,headers=headers,timeout=3)
+    r1 = requests.get(vuln_url1,headers=headers,timeout=3,proxies=proxies)
+    r2 = requests.get(vuln_url2,headers=headers,timeout=3,proxies=proxies)
     try:
         if r1.status_code == 200 and r2.status_code == 200:
             result['target'] = target

