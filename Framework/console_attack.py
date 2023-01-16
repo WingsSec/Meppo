@@ -15,6 +15,7 @@ from Config.config_logging import loglog
 from Moudle.Moudle_index import *
 
 def urlcheck(url):
+    url = url.rstrip('/')
     if 'http' in url:
         return url
     else:
