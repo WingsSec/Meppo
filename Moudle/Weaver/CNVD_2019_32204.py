@@ -2,10 +2,11 @@
 # _*_ coding:utf-8 _*_
 
 import requests
-from Config.config_requests import headers
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
-requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+from Config.config_proxies import proxies
+from Config.config_requests import headers
+
+requests.packages.urllib3.disable_warnings()
 
 ########################################################################################################################
 # 脚本信息
@@ -30,7 +31,7 @@ def poc(target):
         url = target + payload
         for data in (data1,data2,data3):
             try:
-                r = requests.post(url,data=data,headers=headers,verify=False,timeout=3)
+                r = requests.post(url,data=data,headers=headers,verify=False,timeout=3,proxies=proxies)
                 if r.status_code == 200:
                     if ";</script>" not in r.content:
                         if "login.jsp" not in r.content:

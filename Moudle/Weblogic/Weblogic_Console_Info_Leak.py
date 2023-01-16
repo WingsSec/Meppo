@@ -4,10 +4,10 @@
 
 import sys
 import requests
-from Config.config_requests import ua
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
-requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+from Config.config_proxies import proxies
+from Config.config_requests import ua
+requests.packages.urllib3.disable_warnings()
 
 # 脚本信息
 ######################################################
@@ -22,7 +22,7 @@ def poc(target):
     vuln_url = target + '/console/login/LoginForm.jsp'
     headers = {"User-Agent":ua}
 
-    r = requests.get(vuln_url, headers=headers,verify=False,timeout=3)
+    r = requests.get(vuln_url, headers=headers,verify=False,timeout=3,proxies=proxies)
     try:
         if r.status_code == 200:
             result['target'] = target

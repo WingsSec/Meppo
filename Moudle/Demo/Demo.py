@@ -2,8 +2,11 @@
 # _*_ coding:utf-8 _*_
 
 import requests
-from Config.config_requests import headers
 
+from Config.config_proxies import proxies
+from Config.config_requests import ua, headers
+
+#这里保留不用管即可，防止https请求报错的
 requests.packages.urllib3.disable_warnings()
 
 
@@ -16,11 +19,17 @@ FOFA_RULE='对应漏洞框架的fofa语法'
 ########################################################################################################################
 # 漏洞检测模块
 def poc(target):
-    result={}
+    result={}     # 必要的接口，返回值要这个格式
+
+    #可以引入header，默认只带ua，如需自定义headers，仅引入ua即可
+    headers={
+        "User-Agent":ua
+    }
+
     try:
-        req = requests.get(target+'/robots.txt', headers=headers, timeout=3, verify=False)
+        req = requests.get(target+'/robots.txt', headers=headers, timeout=3, verify=False,proxies=proxies)
         if "Disallow" in req.text:
-            result['target'] = target
+            result['target'] = target     #三项四项完全无所谓，只要前两项默认即可
             result['poc'] = NAME
             result['xxx'] = '按需求随便写，删了都行'
             return result

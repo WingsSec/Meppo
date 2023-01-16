@@ -8,10 +8,10 @@
 |_| \_\__,_|_.__/|_.__/|_|\__|_|  |_|\__,_|___/_|\_\
                                                     
 '''
-# from time import sleep
-# from Tools.ReBuild import Rebuild
-# Rebuild()
-# sleep(1)
+from time import sleep
+from Tools.ReBuild import Rebuild
+Rebuild()
+sleep(1)
 
 from Config.config_banner import Banner
 from Framework.console_main import Console

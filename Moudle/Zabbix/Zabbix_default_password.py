@@ -3,6 +3,8 @@
 
 import json
 import requests
+
+from Config.config_proxies import proxies
 from Config.config_requests import ua
 
 requests.packages.urllib3.disable_warnings()
@@ -33,9 +35,9 @@ def poc(target):
     }
 
     try:
-        r = requests.post(target+"/api_jsonrpc.php",headers=headers, data=json.dumps(data), verify=False,timeout=3)
+        r = requests.post(target+"/api_jsonrpc.php",headers=headers, data=json.dumps(data), verify=False,timeout=3,proxies=proxies)
         if r.status_code==404:
-            rr = requests.post(target + "/zabbix/api_jsonrpc.php", headers=headers, data=json.dumps(data), verify=False, timeout=3)
+            rr = requests.post(target + "/zabbix/api_jsonrpc.php", headers=headers, data=json.dumps(data), verify=False, timeout=3,proxies=proxies)
             if rr.status_code == 200 and 'result' in rr.text and 'error' not in rr.text:
                 result['target'] = target
                 result['poc'] = NAME

