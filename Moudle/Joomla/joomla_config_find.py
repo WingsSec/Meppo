@@ -2,6 +2,8 @@
 # _*_ coding:utf-8 _*_
 
 import requests
+
+from Config.config_proxies import proxies
 from Config.config_requests import ua
 
 
@@ -27,7 +29,7 @@ def poc(target):
             "Accept-Language": "zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3",
             "Connection": "close"
         }
-        res = requests.get(url, headers=headers, timeout=5, verify=False)
+        res = requests.get(url, headers=headers, timeout=5, verify=False,proxies=proxies)
         res = res.text
         #print(res)
 

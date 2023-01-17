@@ -2,11 +2,10 @@
 # _*_ coding:utf-8 _*_
 
 import requests
-import random
-import re
+from Config.config_proxies import proxies
 from Config.config_requests import headers
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
+requests.packages.urllib3.disable_warnings()
 # 脚本信息
 ######################################################
 NAME='Seeyon_OA_finereport_login'
@@ -19,8 +18,8 @@ def poc(target):
     result = {}
     vuln_url = target + "/seeyonreport/ReportServer?op=fs_load&cmd=fs_signin&_=1673833136504"
     try:
-        requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
-        r1 = requests.get(url=vuln_url, headers=headers, verify=False, timeout=5)
+
+        r1 = requests.get(url=vuln_url, headers=headers, verify=False, timeout=5,proxies=proxies)
         if 'FineReport' in r1.text and r1.status_code == 200:
             result['target'] = target
             result['poc'] = NAME
@@ -28,7 +27,7 @@ def poc(target):
             return result
         else:
             pass
-    except Exception as e:
+    except:
         pass
 
 def exp(target):

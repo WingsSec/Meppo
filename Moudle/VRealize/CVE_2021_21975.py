@@ -2,10 +2,11 @@
 # _*_ coding:utf-8 _*_
 
 import requests
-import requests.packages.urllib3
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
-requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+from Config.config_proxies import proxies
+from Config.config_requests import ua
+
+requests.packages.urllib3.disable_warnings()
 
 
 # 脚本信息
@@ -28,11 +29,11 @@ def ret_data(exp=None):
 def _request(target,exp=None):
     url = target + "/casa/nodes/thumbprints"
     headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.81 Safari/537.36",
+        "User-Agent": ua,
         "Content-Type": "application/json;charset=UTF-8"
     }
     data,timeout = ret_data(exp)
-    res = requests.post(url, headers=headers, data=data, verify=False, timeout=timeout)
+    res = requests.post(url, headers=headers, data=data, verify=False, timeout=timeout,proxies=proxies)
     return res,url
 
 def poc(target,exp=None):

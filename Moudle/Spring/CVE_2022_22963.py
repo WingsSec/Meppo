@@ -2,11 +2,11 @@
 # _*_ coding:utf-8 _*_
 
 import requests
-import requests.packages.urllib3
+from Config.config_proxies import proxies
 from Config.config_requests import ua
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
-requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+
+requests.packages.urllib3.disable_warnings()
 
 # 脚本信息
 ######################################################
@@ -33,12 +33,11 @@ def poc(target,):
     data = {
         'a': 'b'
     }
-    res = requests.post(url, headers=headers, data=data, verify=False, timeout=5)
+    res = requests.post(url, headers=headers, data=data, verify=False, timeout=5,proxies=proxies)
     if res.status_code == 500 and '"error":"Internal Server Error"' in res.text:
         result['vurl'] = url
         result['poc'] = NAME
         result['message'] = "spring_function_rce"
-        # print(result)
         return result
 
 

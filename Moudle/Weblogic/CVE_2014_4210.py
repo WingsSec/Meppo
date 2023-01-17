@@ -2,6 +2,8 @@
 # _*_ coding:utf-8 _*_
 
 import requests
+
+from Config.config_proxies import proxies
 from Config.config_requests import ua
 
 
@@ -17,7 +19,7 @@ def poc(target):
     result={}
     vuln_url = target + "/uddiexplorer/SearchPublicRegistries.jsp"
     headers = {"User-Agent":ua}
-    r = requests.get(vuln_url, headers=headers,verify=False,timeout=3)
+    r = requests.get(vuln_url, headers=headers,verify=False,timeout=3,proxies=proxies)
     try:
         if r.status_code == 200:
             result['target'] = target

